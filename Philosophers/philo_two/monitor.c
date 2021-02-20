@@ -6,7 +6,7 @@
 /*   By: ttarumot <ttarumot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/19 13:31:24 by ttarumot          #+#    #+#             */
-/*   Updated: 2021/02/20 10:56:36 by ttarumot         ###   ########.fr       */
+/*   Updated: 2021/02/20 12:01:45 by ttarumot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,8 @@ void		monitor_meals(t_data *data, t_philo *philo)
 		kill_philosophers(data, philo);
 	if (!data->one_die && (data->meals_finish == data->n_philo))
 	{
-		pthread_mutex_lock(philo->m_display);
+		sem_wait(philo->sem_display);
 		display_all_meals_ate(data);
-		free(philo->m_display);
 	}
 }
 

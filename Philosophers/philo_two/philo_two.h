@@ -6,7 +6,7 @@
 /*   By: ttarumot <ttarumot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/11 12:08:00 by Jeanxavier        #+#    #+#             */
-/*   Updated: 2021/02/20 10:56:25 by ttarumot         ###   ########.fr       */
+/*   Updated: 2021/02/20 11:30:23 by ttarumot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define PHILO_TWO_H
 
 # include "philo.h"
+# include <semaphore.h>
 
 # define MICROSEC	0
 # define MILLESEC	1
@@ -21,9 +22,8 @@
 typedef struct				s_philo
 {
 	pthread_t			thread;
-	pthread_mutex_t		*m_fork1;
-	pthread_mutex_t		*m_fork2;
-	pthread_mutex_t		*m_display;
+	sem_t				*sem_forks;
+	sem_t				*sem_display;
 	unsigned int		id;
 	unsigned int		is_dead;
 	unsigned int		last_meal;

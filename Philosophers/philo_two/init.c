@@ -6,7 +6,7 @@
 /*   By: ttarumot <ttarumot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/19 11:22:07 by ttarumot          #+#    #+#             */
-/*   Updated: 2021/02/20 10:57:05 by ttarumot         ###   ########.fr       */
+/*   Updated: 2021/02/20 12:03:38 by ttarumot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,56 +25,24 @@ void		init_data(int argc, char **argv, t_data *data)
     }
 }
 
-int			init_fork(t_philo *philo, unsigned int n_philo)
-{
-	unsigned int i;
-
-	i = 0;
-	while (i < n_philo)
-	{
-		if (!(philo[i].m_fork1 = malloc(sizeof(pthread_mutex_t))))
-			return (1);
-		pthread_mutex_init(philo[i].m_fork1, NULL);
-		i++;
-	}
-	i = 0;
-	while (i < n_philo)
-	{
-		philo[i].m_fork2 = philo[(i + 1) % n_philo].m_fork1;
-		i++;
-	}
-	return (0);
-}
-
-int			init_display(t_philo *philo, unsigned int n_philo)
-{
-	unsigned int	i;
-	pthread_mutex_t	*display;
-
-	if (!(display = malloc(sizeof(pthread_mutex_t))))
-		return (1);
-	pthread_mutex_init(display, NULL);
-	i = 0;
-	while (i < n_philo)
-	{
-		philo[i].m_display = display;
-		i++;
-	}
-	return (0);
-}
-
 int			init_philosopher(t_philo *philo, unsigned int n_philo)
 {
-	unsigned int i;
+	unsigned int	i;
+	sem_t			*sem_forks;
+	sem_t			*sem_display;
 
-	if (init_fork(philo, n_philo))
-		return (1);
-	if (init_display(philo, n_philo))
-		return (1);
 	i = 0;
+	sem_unlink("fork");
+	sem_unlink("display");
+	sem_forks = sem_open("fork", O_CREAT | O_EXCL, S_IRWXU, n_philo);
+	sem_display = sem_open("display", O_CREAT | O_EXCL, S_IRWXU, 1);
 	while (i < n_philo)
 	{
+		philo[i].sem_forks = sem_forks;
+		philo[i].sem_display = sem_display;
 		philo[i].id = i + 1;
+		philo[i].is_dead = 0;
+		philo[i].last_meal = 0;
 		i++;
 	}
 	return (0);

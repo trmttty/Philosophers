@@ -6,7 +6,7 @@
 /*   By: ttarumot <ttarumot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/19 13:31:24 by ttarumot          #+#    #+#             */
-/*   Updated: 2021/02/20 10:56:58 by ttarumot         ###   ########.fr       */
+/*   Updated: 2021/02/20 11:46:43 by ttarumot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void		*reaper(void *stock)
 	current_time = get_time(data->t_start_usec, data->t_start_sec);
 	if (philo->life && current_time - philo->last_meal >= data->t_die)
 	{
-		pthread_mutex_lock(philo->m_display);
+		sem_wait(philo->sem_display);
 		data->one_die = TRUE;
 		display_manager(s, philo, EVENT_DEAD);
 	}
@@ -75,7 +75,7 @@ int			launch(t_stock *stock, t_data *data, t_philo *philo)
 		stock[i].data = data;
 		if (pthread_create(&philo[i].thread, NULL, &life_philosophers, &stock[i]))
 			return (1);
-		usleep(10);
+		usleep(35);
 		i++;
 	}
 	return (0);

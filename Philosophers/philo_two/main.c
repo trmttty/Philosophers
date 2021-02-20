@@ -6,7 +6,7 @@
 /*   By: ttarumot <ttarumot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/11 11:59:22 by Jeanxavier        #+#    #+#             */
-/*   Updated: 2021/02/20 10:56:53 by ttarumot         ###   ########.fr       */
+/*   Updated: 2021/02/20 11:50:40 by ttarumot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ int			main(int argc, char **argv)
 		return (0);
 	launch(stock, data, philo);
 	monitor(data, philo);
-	free_philosophers(data, philo);
+	free(philo);
+	free(data);
 	free(stock);
 	return (0);
 }

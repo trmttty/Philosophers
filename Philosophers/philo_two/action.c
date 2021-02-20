@@ -6,7 +6,7 @@
 /*   By: ttarumot <ttarumot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/19 14:13:25 by ttarumot          #+#    #+#             */
-/*   Updated: 2021/02/20 10:57:17 by ttarumot         ###   ########.fr       */
+/*   Updated: 2021/02/20 11:39:07 by ttarumot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,36 +14,36 @@
 
 void		philo_take_fork(t_stock *stock, t_philo *philo)
 {
-	pthread_mutex_lock(philo->m_fork1);
-	pthread_mutex_lock(philo->m_fork2);
-	pthread_mutex_lock(philo->m_display);
+	sem_wait(philo->sem_forks);
+	sem_wait(philo->sem_forks);
+	sem_wait(philo->sem_display);
 	display_manager(stock, philo, EVENT_FORK);
 	display_manager(stock, philo, EVENT_FORK);
-	pthread_mutex_unlock(philo->m_display);
+	sem_post(philo->sem_display);
 }
 
 void		philo_eat(t_stock *s, t_philo *philo)
 {
-	pthread_mutex_lock(s->philo->m_display);
+	sem_wait(philo->sem_display);
 	display_manager(s, philo, EVENT_EAT);
+	sem_post(philo->sem_display);
 	philo->last_meal = get_time(s->data->t_start_usec, s->data->t_start_sec);
-	pthread_mutex_unlock(s->philo->m_display);
 	usleep(s->data->t_eat * ONE_MILLISEC);
-	pthread_mutex_unlock(philo->m_fork1);
-	pthread_mutex_unlock(philo->m_fork2);
+	sem_post(philo->sem_forks);
+	sem_post(philo->sem_forks);
 }
 
 void		philo_sleep(t_stock *stock, t_philo *philo)
 {
-	pthread_mutex_lock(stock->philo->m_display);
+	sem_wait(philo->sem_display);
 	display_manager(stock, philo, EVENT_SLEEP);
-	pthread_mutex_unlock(stock->philo->m_display);
+	sem_post(philo->sem_display);
 	usleep(stock->data->t_sleep * ONE_MILLISEC);
 }
 
 void		philo_think(t_stock *stock, t_philo *philo)
 {
-	pthread_mutex_lock(stock->philo->m_display);
+	sem_wait(philo->sem_display);
 	display_manager(stock, philo, EVENT_THINK);
-	pthread_mutex_unlock(stock->philo->m_display);
+	sem_post(philo->sem_display);
 }
