@@ -6,11 +6,11 @@
 /*   By: ttarumot <ttarumot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/19 14:05:34 by ttarumot          #+#    #+#             */
-/*   Updated: 2021/02/20 10:57:11 by ttarumot         ###   ########.fr       */
+/*   Updated: 2021/02/20 12:40:37 by ttarumot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo_two.h"
+#include "philo_three.h"
 
 void		display_all_meals_ate(t_data *data)
 {

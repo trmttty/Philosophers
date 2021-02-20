@@ -1,7 +1,7 @@
 CC			= gcc
 FLAGS		= -Wall -Wextra -Werror
 LIBS		= -lpthread
-NAME 		= philo_two
+NAME 		= philo_three
 DIR_LIB		= libft
 LIBFT		= $(DIR_LIB)/libft.a
 OBJ_DIR 	= ./objs/

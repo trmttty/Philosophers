@@ -6,11 +6,11 @@
 /*   By: ttarumot <ttarumot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/19 11:22:07 by ttarumot          #+#    #+#             */
-/*   Updated: 2021/02/20 12:03:38 by ttarumot         ###   ########.fr       */
+/*   Updated: 2021/02/20 12:40:43 by ttarumot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo_two.h"
+#include "philo_three.h"
 
 void		init_data(int argc, char **argv, t_data *data)
 {

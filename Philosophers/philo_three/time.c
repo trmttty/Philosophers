@@ -6,11 +6,11 @@
 /*   By: ttarumot <ttarumot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/19 11:41:46 by ttarumot          #+#    #+#             */
-/*   Updated: 2021/02/20 10:56:04 by ttarumot         ###   ########.fr       */
+/*   Updated: 2021/02/20 12:42:22 by ttarumot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo_two.h"
+#include "philo_three.h"
 
 unsigned int	get_time(unsigned int start_usec, unsigned int start_sec)
 {

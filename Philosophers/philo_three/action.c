@@ -6,11 +6,11 @@
 /*   By: ttarumot <ttarumot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/19 14:13:25 by ttarumot          #+#    #+#             */
-/*   Updated: 2021/02/20 11:39:07 by ttarumot         ###   ########.fr       */
+/*   Updated: 2021/02/20 12:40:27 by ttarumot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo_two.h"
+#include "philo_three.h"
 
 void		philo_take_fork(t_stock *stock, t_philo *philo)
 {
