@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo_two.h                                        :+:      :+:    :+:   */
+/*   philo_three.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ttarumot <ttarumot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/11 12:08:00 by Jeanxavier        #+#    #+#             */
-/*   Updated: 2021/02/20 11:30:23 by ttarumot         ###   ########.fr       */
+/*   Updated: 2021/02/20 13:26:56 by ttarumot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,15 @@
 
 # include "philo.h"
 # include <semaphore.h>
+# include <signal.h>
+# include <unistd.h>
 
 # define MICROSEC	0
 # define MILLESEC	1
 
 typedef struct				s_philo
 {
-	pthread_t			thread;
+	pid_t				pid;
 	sem_t				*sem_forks;
 	sem_t				*sem_display;
 	unsigned int		id;

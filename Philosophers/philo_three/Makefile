@@ -1,4 +1,4 @@
-CC			= gcc
+CC			= gcc -g
 FLAGS		= -Wall -Wextra -Werror
 LIBS		= -lpthread
 NAME 		= philo_three
