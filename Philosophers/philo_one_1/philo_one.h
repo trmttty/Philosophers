@@ -6,7 +6,7 @@
 /*   By: ttarumot <ttarumot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/11 12:08:00 by Jeanxavier        #+#    #+#             */
-/*   Updated: 2021/02/19 14:02:30 by ttarumot         ###   ########.fr       */
+/*   Updated: 2021/02/19 14:09:51 by ttarumot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ unsigned int	get_time(unsigned int start_usec, unsigned int start_sec);
 void			monitor(t_data *data, t_philo *philo);
 int				launch(t_stock *stock, t_data *data, t_philo *philo);
 void			free_philosophers(t_data *data, t_philo *philo);
+void			display_all_meals_ate(t_data *data);
+void			display_manager(t_stock *s, t_philo *philo, char *event);
 
 
 

@@ -6,15 +6,16 @@
 /*   By: ttarumot <ttarumot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/19 11:30:51 by ttarumot          #+#    #+#             */
-/*   Updated: 2021/02/19 13:54:20 by ttarumot         ###   ########.fr       */
+/*   Updated: 2021/02/19 15:43:30 by ttarumot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_one.h"
 
-int			check_args(int ac, char **av)
+int			check_args(int argc, char **argv)
 {
-	if (ac != 5 && ac != 6)
+    (void)argv;
+	if (argc != 5 && argc != 6)
 		return (1);
 	return (0);
 }

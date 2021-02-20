@@ -6,7 +6,7 @@
 /*   By: ttarumot <ttarumot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/19 13:31:24 by ttarumot          #+#    #+#             */
-/*   Updated: 2021/02/19 14:01:15 by ttarumot         ###   ########.fr       */
+/*   Updated: 2021/02/19 14:06:49 by ttarumot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void		*reaper(void *stock)
 	t_philo			*philo;
 	unsigned int	current_time;
 
-	s = (t_stock *)stock;
+	s = stock;
 	data = s->data;
 	philo = s->philo;
 	usleep(data->t_die * ONE_MILLISEC);
