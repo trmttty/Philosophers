@@ -7,7 +7,13 @@ LIBFT		= $(DIR_LIB)/libft.a
 OBJ_DIR 	= ./objs/
 
 SRC_RT = main.c \
-			error.c
+			action.c \
+			display.c \
+			init.c \
+			launch.c \
+			monitor.c \
+			time.c \
+			utils.c
 
 OBJ_RT = $(addprefix $(OBJ_DIR),$(SRC_RT:%.c=%.o))
 OBJ = $(OBJ_RT)
