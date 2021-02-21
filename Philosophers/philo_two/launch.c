@@ -6,7 +6,7 @@
 /*   By: ttarumot <ttarumot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/19 13:31:24 by ttarumot          #+#    #+#             */
-/*   Updated: 2021/02/22 00:43:01 by ttarumot         ###   ########.fr       */
+/*   Updated: 2021/02/22 03:03:35 by ttarumot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void		*reaper(void *data)
 	if (philo->life && current_time - philo->last_meal >= state->t_die)
 	{
 		sem_wait(philo->sem_display);
-		state->philo_dead = true;
+		state->philo_dead = TRUE;
 		display_manager(s, philo, EVENT_DEAD);
 	}
 	return (NULL);
@@ -45,8 +45,8 @@ void		*life_philosophers(void *data)
 	s = data;
 	state = s->state;
 	philo = s->philo;
-	philo->life = true;
-	while (!state->philo_dead && (!state->meals || i < state->n_must_eat))
+	philo->life = TRUE;
+	while (!state->philo_dead && (!state->n_must_eat || i < state->n_must_eat))
 	{
 		pthread_detach(death);
 		pthread_create(&death, NULL, &reaper, s);
@@ -56,26 +56,26 @@ void		*life_philosophers(void *data)
 		philo_think(s, philo);
 		i++;
 	}
-	philo->life = false;
+	philo->life = FALSE;
 	pthread_detach(death);
-	if (state->meals && i == state->n_must_eat)
+	if (state->n_must_eat && i == state->n_must_eat)
 		state->eat_count++;
 	return (NULL);
 }
 
-int			launch(t_data *data, t_state *state, t_philo *philo)
+int			launch(t_philo *philo, t_state *state, t_data *data)
 {
 	unsigned int	i;
 
-	get_time_start(state);
+	if (get_start_time(state))
+		return (error_status(GETTIME));
 	i = 0;
 	while (i < state->n_philo)
 	{
 		data[i].philo = &philo[i];
 		data[i].state = state;
 		if (pthread_create(&philo[i].thread, NULL, &life_philosophers, &data[i]))
-			return (1);
-		usleep(35);
+			return (error_status(PCREATE));
 		i++;
 	}
 	return (0);

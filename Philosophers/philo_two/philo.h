@@ -6,7 +6,7 @@
 /*   By: ttarumot <ttarumot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/11 13:27:31 by Jeanxavier        #+#    #+#             */
-/*   Updated: 2021/02/22 00:35:52 by ttarumot         ###   ########.fr       */
+/*   Updated: 2021/02/22 02:25:36 by ttarumot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,18 @@
 # include <sys/time.h>
 # include <stdio.h>
 # include <pthread.h>
-# include <stdbool.h>
 # include "./libft/libft.h"
+
+# define INVAL			"Error: Invalid argument"
+# define NOMEM			"Error: Cannot allocate memory"
+# define SEMOPEN		"Error: Cannot initialize and open a named semaphore"
+# define SEMWAIT		"Error: Cannot lock a semaphore"
+# define PCREATE		"Error: Cannot create a new thread"
+# define PDETACH		"Error: Cannot detach a thread"
+# define GETTIME		"Error: Cannot get date and time"
+
+# define TRUE			1
+# define FALSE			0
 
 # define EVENT_FORK		"has taken a fork"
 # define EVENT_EAT		"is eating"
@@ -40,9 +50,8 @@ typedef struct		s_state
 	unsigned int	eat_count;
 	uint64_t		t_start_usec;
 	uint64_t		t_start_sec;
-	bool			meals;
-	bool			option;
-	bool			philo_dead;
+	int				option;
+	int				philo_dead;
 }					t_state;
 
 typedef	struct		s_data

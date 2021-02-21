@@ -6,30 +6,37 @@
 /*   By: ttarumot <ttarumot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/19 13:31:24 by ttarumot          #+#    #+#             */
-/*   Updated: 2021/02/22 00:45:16 by ttarumot         ###   ########.fr       */
+/*   Updated: 2021/02/22 03:05:10 by ttarumot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_two.h"
 
-void		kill_philosophers(t_state *state, t_philo *philo)
+int			kill_philosophers(t_state *state, t_philo *philo)
 {
 	unsigned int	i;
 
 	i = 0;
 	while (i < state->n_philo)
-		pthread_detach(philo[i++].thread);
+	{
+
+		if (pthread_detach(philo[i].thread))
+			return (error_status(PDETACH));
+		i++;
+	}
+	return (0);
 }
 
-void		monitor_die(t_state *state, t_philo *philo)
+int			monitor_die(t_state *state, t_philo *philo)
 {
 	while (!state->philo_dead)
 		usleep(ONE_MILLISEC);
 	if (state->philo_dead)
 		kill_philosophers(state, philo);
+	return (0);
 }
 
-void		monitor_meals(t_state *state, t_philo *philo)
+int			monitor_meals(t_state *state, t_philo *philo)
 {
 	while (!state->philo_dead && (state->eat_count < state->n_philo))
 		usleep(ONE_MILLISEC);
@@ -37,15 +44,17 @@ void		monitor_meals(t_state *state, t_philo *philo)
 		kill_philosophers(state, philo);
 	if (!state->philo_dead && (state->eat_count == state->n_philo))
 	{
-		sem_wait(philo->sem_display);
+		if (sem_wait(philo->sem_display))
+			return (error_status(SEMWAIT));
 		display_all_meals_ate(state);
 	}
+	return (0);
 }
 
-void		monitor(t_state *state, t_philo *philo)
+int			monitor(t_philo *philo, t_state *state)
 {
-	if (state->meals)
-		monitor_meals(state, philo);
+	if (state->n_must_eat)
+		return (monitor_meals(state, philo));
 	else
-		monitor_die(state, philo);
+		return (monitor_die(state, philo));
 }

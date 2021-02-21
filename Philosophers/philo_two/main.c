@@ -6,7 +6,7 @@
 /*   By: ttarumot <ttarumot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/11 11:59:22 by Jeanxavier        #+#    #+#             */
-/*   Updated: 2021/02/22 00:01:17 by ttarumot         ###   ########.fr       */
+/*   Updated: 2021/02/22 03:04:54 by ttarumot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,25 @@
 
 int			main(int argc, char **argv)
 {
-	t_state		*state;
 	t_philo		*philo;
+	t_state		*state;
 	t_data		*data;
 
 	if (check_args(argc, argv))
-		return (error_status("Error: Invalid argument"));
+		return (error_status(INVAL));
 	if (!(state = ft_calloc(1, sizeof(t_state))))
-		return (1);
+		return (error_status(NOMEM));
 	init_state(argc, argv, state);
 	if (!(philo = ft_calloc(state->n_philo, sizeof(t_philo))))
+		return (error_status(NOMEM));
+	if (init_philosopher(philo, state))
 		return (1);
-	if (init_philosopher(philo, state->n_philo))
+	if (!(data = ft_calloc(state->n_philo, sizeof(t_data))))
+		return (error_status(NOMEM));
+	if (launch(philo, state, data))
 		return (1);
-	if (!(data = ft_calloc(state->n_philo + 1, sizeof(t_data))))
-		return (0);
-	launch(data, state, philo);
-	monitor(state, philo);
+	if (monitor(philo, state))
+		return (1);
 	free(philo);
 	free(state);
 	free(data);
