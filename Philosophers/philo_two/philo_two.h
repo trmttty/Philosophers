@@ -6,7 +6,7 @@
 /*   By: ttarumot <ttarumot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/11 12:08:00 by Jeanxavier        #+#    #+#             */
-/*   Updated: 2021/02/20 11:30:23 by ttarumot         ###   ########.fr       */
+/*   Updated: 2021/02/21 23:44:40 by ttarumot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # define MICROSEC	0
 # define MILLESEC	1
 
-typedef struct				s_philo
+typedef struct			s_philo
 {
 	pthread_t			thread;
 	sem_t				*sem_forks;
@@ -27,38 +27,32 @@ typedef struct				s_philo
 	unsigned int		id;
 	unsigned int		is_dead;
 	unsigned int		last_meal;
-	t_bool				life;
-}							t_philo;
+	bool				life;
+}						t_philo;
 
 /*
 ** init_philo.c
 */
-int				check_args(int ac, char **av);
-void			init_data(int argc, char **argv, t_data *data);
+int				check_args(int argc, char **argv);
+void			init_state(int argc, char **argv, t_state *state);
 int				init_philosopher(t_philo *philo, unsigned int n_philo);
-void			get_time_start(t_data *data);
+void			get_time_start(t_state *state);
 unsigned int	get_time(unsigned int start_usec, unsigned int start_sec);
-void			monitor(t_data *data, t_philo *philo);
-int				launch(t_stock *stock, t_data *data, t_philo *philo);
-void			free_philosophers(t_data *data, t_philo *philo);
-void			display_all_meals_ate(t_data *data);
-void			display_manager(t_stock *s, t_philo *philo, char *event);
+void			monitor(t_state *state, t_philo *philo);
+int				launch(t_data *data, t_state *state, t_philo *philo);
+void			free_philosophers(t_state *state, t_philo *philo);
+void			display_all_meals_ate(t_state *state);
+void			display_manager(t_data *data, t_philo *philo, char *event);
 
 
-
-
-
-
-void						philo_take_fork(t_stock *stock, t_philo *philo);
-void						philo_eat(t_stock *stock, t_philo *philo);
-void						philo_sleep(t_stock *stock, t_philo *philo);
-void						philo_think(t_stock *stock, t_philo *philo);
-void						display_manager(t_stock *stock, t_philo *philo,
-							char *event);
-void						*reaper(void *stock);
-void						monitor(t_data *data, t_philo *philo);
-void						display_all_meals_ate(t_data *data);
-void						display_manager(t_stock *s, t_philo *philo,
-							char *event);
+void			philo_take_fork(t_data *data, t_philo *philo);
+void			philo_eat(t_data *data, t_philo *philo);
+void			philo_sleep(t_data *data, t_philo *philo);
+void			philo_think(t_data *data, t_philo *philo);
+void			display_manager(t_data *data, t_philo *philo, char *event);
+void			*reaper(void *data);
+void			monitor(t_state *state, t_philo *philo);
+void			display_all_meals_ate(t_state *state);
+void			display_manager(t_data *s, t_philo *philo, char *event);
 
 #endif

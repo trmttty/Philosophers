@@ -13,6 +13,7 @@ SRC_RT = main.c \
 			launch.c \
 			monitor.c \
 			time.c \
+			error.c \
 			utils.c
 
 OBJ_RT = $(addprefix $(OBJ_DIR),$(SRC_RT:%.c=%.o))

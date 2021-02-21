@@ -6,22 +6,22 @@
 /*   By: ttarumot <ttarumot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/19 11:22:07 by ttarumot          #+#    #+#             */
-/*   Updated: 2021/02/20 12:03:38 by ttarumot         ###   ########.fr       */
+/*   Updated: 2021/02/22 00:39:22 by ttarumot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_two.h"
 
-void		init_data(int argc, char **argv, t_data *data)
+void		init_state(int argc, char **argv, t_state *state)
 {
-	data->n_philo = ft_atoi(argv[1]);
-	data->t_die = ft_atoi(argv[2]);
-	data->t_eat = ft_atoi(argv[3]);
-	data->t_sleep = ft_atoi(argv[4]);
+	state->n_philo = ft_atoi(argv[1]);
+	state->t_die = ft_atoi(argv[2]);
+	state->t_eat = ft_atoi(argv[3]);
+	state->t_sleep = ft_atoi(argv[4]);
 	if (argc == 6)
 	{
-		data->meals = 1;
-		data->nb_meals = ft_atoi(argv[5]);
+		state->meals = 1;
+		state->eat_count = ft_atoi(argv[5]);
     }
 }
 

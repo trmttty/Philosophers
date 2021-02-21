@@ -6,7 +6,7 @@
 /*   By: ttarumot <ttarumot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/19 11:41:46 by ttarumot          #+#    #+#             */
-/*   Updated: 2021/02/20 10:56:04 by ttarumot         ###   ########.fr       */
+/*   Updated: 2021/02/22 00:45:43 by ttarumot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,11 @@ unsigned int	get_time(unsigned int start_usec, unsigned int start_sec)
 	/ ONE_MILLISEC);
 }
 
-void        get_time_start(t_data *data)
+void        get_time_start(t_state *state)
 {
 	struct timeval	current_time;
 
 	gettimeofday(&current_time, NULL);
-    data->t_start_usec = current_time.tv_usec;
-    data->t_start_sec = current_time.tv_sec;
+    state->t_start_usec = current_time.tv_usec;
+    state->t_start_sec = current_time.tv_sec;
 }

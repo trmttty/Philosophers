@@ -6,46 +6,46 @@
 /*   By: ttarumot <ttarumot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/19 13:31:24 by ttarumot          #+#    #+#             */
-/*   Updated: 2021/02/20 12:01:45 by ttarumot         ###   ########.fr       */
+/*   Updated: 2021/02/22 00:45:16 by ttarumot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_two.h"
 
-void		kill_philosophers(t_data *data, t_philo *philo)
+void		kill_philosophers(t_state *state, t_philo *philo)
 {
 	unsigned int	i;
 
 	i = 0;
-	while (i < data->n_philo)
+	while (i < state->n_philo)
 		pthread_detach(philo[i++].thread);
 }
 
-void		monitor_die(t_data *data, t_philo *philo)
+void		monitor_die(t_state *state, t_philo *philo)
 {
-	while (!data->one_die)
+	while (!state->philo_dead)
 		usleep(ONE_MILLISEC);
-	if (data->one_die)
-		kill_philosophers(data, philo);
+	if (state->philo_dead)
+		kill_philosophers(state, philo);
 }
 
-void		monitor_meals(t_data *data, t_philo *philo)
+void		monitor_meals(t_state *state, t_philo *philo)
 {
-	while (!data->one_die && (data->meals_finish < data->n_philo))
+	while (!state->philo_dead && (state->eat_count < state->n_philo))
 		usleep(ONE_MILLISEC);
-	if (data->one_die == 1 || (data->meals_finish == data->n_philo))
-		kill_philosophers(data, philo);
-	if (!data->one_die && (data->meals_finish == data->n_philo))
+	if (state->philo_dead == 1 || (state->eat_count == state->n_philo))
+		kill_philosophers(state, philo);
+	if (!state->philo_dead && (state->eat_count == state->n_philo))
 	{
 		sem_wait(philo->sem_display);
-		display_all_meals_ate(data);
+		display_all_meals_ate(state);
 	}
 }
 
-void		monitor(t_data *data, t_philo *philo)
+void		monitor(t_state *state, t_philo *philo)
 {
-	if (data->meals)
-		monitor_meals(data, philo);
+	if (state->meals)
+		monitor_meals(state, philo);
 	else
-		monitor_die(data, philo);
+		monitor_die(state, philo);
 }
