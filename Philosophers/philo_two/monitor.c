@@ -6,7 +6,7 @@
 /*   By: ttarumot <ttarumot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/19 13:31:24 by ttarumot          #+#    #+#             */
-/*   Updated: 2021/02/22 03:05:10 by ttarumot         ###   ########.fr       */
+/*   Updated: 2021/02/22 03:09:20 by ttarumot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int			kill_philosophers(t_state *state, t_philo *philo)
 	return (0);
 }
 
-int			monitor_die(t_state *state, t_philo *philo)
+int			monitor_philo_dead(t_state *state, t_philo *philo)
 {
 	while (!state->philo_dead)
 		usleep(ONE_MILLISEC);
@@ -36,7 +36,7 @@ int			monitor_die(t_state *state, t_philo *philo)
 	return (0);
 }
 
-int			monitor_meals(t_state *state, t_philo *philo)
+int			monitor_eat_count(t_state *state, t_philo *philo)
 {
 	while (!state->philo_dead && (state->eat_count < state->n_philo))
 		usleep(ONE_MILLISEC);
@@ -54,7 +54,6 @@ int			monitor_meals(t_state *state, t_philo *philo)
 int			monitor(t_philo *philo, t_state *state)
 {
 	if (state->n_must_eat)
-		return (monitor_meals(state, philo));
-	else
-		return (monitor_die(state, philo));
+		return (monitor_eat_count(state, philo));
+	return (monitor_philo_dead(state, philo));
 }
