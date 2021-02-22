@@ -6,7 +6,7 @@
 /*   By: ttarumot <ttarumot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/19 11:22:07 by ttarumot          #+#    #+#             */
-/*   Updated: 2021/02/22 17:23:18 by ttarumot         ###   ########.fr       */
+/*   Updated: 2021/02/23 01:33:21 by ttarumot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,13 @@ int			init_philosopher(t_philo *philo, t_state *state)
 
 	sem_unlink("fork");
 	sem_unlink("display");
-	if ((sem_forks = sem_open("fork", O_CREAT | O_EXCL, S_IRWXU, state->num_philo)) == SEM_FAILED)
+	if ((sem_forks = sem_open("fork", O_CREAT | O_EXCL, S_IRWXU, state->num_philo / 2)) == SEM_FAILED)
 		return (error_status(SEMOPEN));
 	if ((sem_display = sem_open("display", O_CREAT | O_EXCL, S_IRWXU, 1)) == SEM_FAILED)
 		return (error_status(SEMOPEN));
 	i = 0;
+	state->sem_forks = sem_forks;
+	state->sem_display = sem_display;
 	while (i < state->num_philo)
 	{
 		philo[i].id = i + 1;

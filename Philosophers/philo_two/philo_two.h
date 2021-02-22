@@ -6,7 +6,7 @@
 /*   By: ttarumot <ttarumot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/11 12:08:00 by Jeanxavier        #+#    #+#             */
-/*   Updated: 2021/02/22 17:22:17 by ttarumot         ###   ########.fr       */
+/*   Updated: 2021/02/23 02:06:34 by ttarumot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ typedef struct			s_philo
 	unsigned int		id;
 	unsigned int		dead;
 	uint64_t			last_meal_start;
+	uint64_t			timestamp;
+	char				*action;
 }						t_philo;
 
 /*
@@ -38,11 +40,11 @@ int				launch(t_philo *philo, t_state *state, t_data *data);
 void			display_finish_all_meals(t_state *state);
 
 
-void			philo_take_forks(t_philo *philo, t_state *state);
-void			philo_eat(t_philo *philo, t_state *state);
-void			philo_sleep(t_philo *philo, t_state *state);
-void			philo_think(t_philo *philo, t_state *state);
-void			display_manager(t_philo *philo, t_state *state, char *event);
+void			philo_take_forks(t_data *data);
+void			philo_eat(t_data *data);
+void			philo_sleep(t_data *data);
+void			philo_think(t_data *data);
+void			print_timestamp(t_data *data, char *action);
 void			display_all_meals_ate(t_state *state);
 
 #endif

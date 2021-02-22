@@ -6,7 +6,7 @@
 /*   By: ttarumot <ttarumot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/19 13:31:24 by ttarumot          #+#    #+#             */
-/*   Updated: 2021/02/22 17:20:58 by ttarumot         ###   ########.fr       */
+/*   Updated: 2021/02/23 02:36:50 by ttarumot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,10 @@ void		*check_alive(void *data)
 	current_time = get_duration_time(state);
 	if (!philo->dead && current_time - philo->last_meal_start >= state->time_die)
 	{
-		sem_wait(state->sem_display);
 		philo->dead = TRUE;
 		state->philo_dead = TRUE;
-		display_manager(philo, state, EVENT_DEAD);
+		sem_wait(state->sem_display);
+		print_timestamp(data, EVENT_DEAD);
 	}
 	return (NULL);
 }
@@ -39,17 +39,17 @@ void		*launch_philosophers(void *data)
 	pthread_t		thread;
 	unsigned int	i;
 
-	i = 0;
 	philo = ((t_data*)data)->philo;
 	state = ((t_data*)data)->state;
+	i = 0;
 	while (!state->philo_dead && (!state->num_must_eat || i < state->num_must_eat))
 	{
 		pthread_create(&thread, NULL, &check_alive, data);
 		pthread_detach(thread);
-		philo_take_forks(philo, state);
-		philo_eat(philo, state);
-		philo_sleep(philo, state);
-		philo_think(philo, state);
+		philo_take_forks(data);
+		philo_eat(data);
+		philo_sleep(data);
+		philo_think(data);
 		i++;
 	}
 	if (state->num_must_eat && i == state->num_must_eat)
