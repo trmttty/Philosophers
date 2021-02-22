@@ -6,7 +6,7 @@
 /*   By: ttarumot <ttarumot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/11 13:27:31 by Jeanxavier        #+#    #+#             */
-/*   Updated: 2021/02/22 02:25:36 by ttarumot         ###   ########.fr       */
+/*   Updated: 2021/02/22 13:30:15 by ttarumot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ typedef struct		s_state
 	uint64_t		t_eat;
 	uint64_t		t_sleep;
 	unsigned int	n_must_eat;
-	unsigned int	eat_count;
+	unsigned int	finish_meal_count;
 	uint64_t		t_start_usec;
 	uint64_t		t_start_sec;
 	int				option;
@@ -66,7 +66,6 @@ typedef	struct		s_data
 int					parsing_manager(t_state *state);
 int					data_manager(int ac, char **av, t_state *state);
 int					check_argument(int ac, char **av, int *prog_arg);
-unsigned int		get_time(unsigned int start_usec, unsigned int start_sec);
 int					error_status(char *message);
 int64_t				ft_atoi64(const char *str);
 uint64_t			ft_atou64(const char *str);

@@ -6,7 +6,7 @@
 /*   By: ttarumot <ttarumot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/11 12:08:00 by Jeanxavier        #+#    #+#             */
-/*   Updated: 2021/02/22 03:04:42 by ttarumot         ###   ########.fr       */
+/*   Updated: 2021/02/22 13:55:42 by ttarumot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ typedef struct			s_philo
 	unsigned int		id;
 	unsigned int		is_dead;
 	unsigned int		last_meal;
-	int					life;
+	int					live;
 }						t_philo;
 
 /*
@@ -36,22 +36,18 @@ typedef struct			s_philo
 int				check_args(int argc, char **argv);
 void			init_state(int argc, char **argv, t_state *state);
 int				init_philosopher(t_philo *philo, t_state *state);
-int				get_start_time(t_state *state);
-unsigned int	get_time(unsigned int start_usec, unsigned int start_sec);
+void			set_start_time(t_state *state);
+uint64_t		get_duration_time(t_state *state);
 int				monitor(t_philo *philo, t_state *state);
 int				launch(t_philo *philo, t_state *state, t_data *data);
-void			free_philosophers(t_state *state, t_philo *philo);
-void			display_all_meals_ate(t_state *state);
-void			display_manager(t_data *data, t_philo *philo, char *event);
+void			display_finish_all_meals(t_state *state);
 
 
-void			philo_take_fork(t_data *data, t_philo *philo);
-void			philo_eat(t_data *data, t_philo *philo);
-void			philo_sleep(t_data *data, t_philo *philo);
-void			philo_think(t_data *data, t_philo *philo);
-void			display_manager(t_data *data, t_philo *philo, char *event);
-void			*reaper(void *data);
+void			philo_take_forks(t_philo *philo, t_state *state);
+void			philo_eat(t_philo *philo, t_state *state);
+void			philo_sleep(t_philo *philo, t_state *state);
+void			philo_think(t_philo *philo, t_state *state);
+void			display_manager(t_philo *philo, t_state *state, char *event);
 void			display_all_meals_ate(t_state *state);
-void			display_manager(t_data *s, t_philo *philo, char *event);
 
 #endif
