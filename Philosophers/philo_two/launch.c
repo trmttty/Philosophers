@@ -6,7 +6,7 @@
 /*   By: ttarumot <ttarumot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/19 13:31:24 by ttarumot          #+#    #+#             */
-/*   Updated: 2021/02/22 14:13:27 by ttarumot         ###   ########.fr       */
+/*   Updated: 2021/02/22 17:20:58 by ttarumot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,12 @@ void		*check_alive(void *data)
 
 	philo = ((t_data*)data)->philo;
 	state = ((t_data*)data)->state;
-	usleep(state->t_die * 1000);
+	usleep(state->time_die * 1000);
 	current_time = get_duration_time(state);
-	if (philo->live && current_time - philo->last_meal >= state->t_die)
+	if (!philo->dead && current_time - philo->last_meal_start >= state->time_die)
 	{
-		sem_wait(philo->sem_display);
+		sem_wait(state->sem_display);
+		philo->dead = TRUE;
 		state->philo_dead = TRUE;
 		display_manager(philo, state, EVENT_DEAD);
 	}
@@ -41,8 +42,7 @@ void		*launch_philosophers(void *data)
 	i = 0;
 	philo = ((t_data*)data)->philo;
 	state = ((t_data*)data)->state;
-	philo->live = TRUE;
-	while (!state->philo_dead && (!state->n_must_eat || i < state->n_must_eat))
+	while (!state->philo_dead && (!state->num_must_eat || i < state->num_must_eat))
 	{
 		pthread_create(&thread, NULL, &check_alive, data);
 		pthread_detach(thread);
@@ -52,9 +52,8 @@ void		*launch_philosophers(void *data)
 		philo_think(philo, state);
 		i++;
 	}
-	philo->live = FALSE;
-	if (state->n_must_eat && i == state->n_must_eat)
-		state->finish_meal_count++;
+	if (state->num_must_eat && i == state->num_must_eat)
+		state->num_finish_meal++;
 	return (NULL);
 }
 
@@ -65,7 +64,7 @@ int			launch(t_philo *philo, t_state *state, t_data *data)
 
 	set_start_time(state);
 	i = 0;
-	while (i < state->n_philo)
+	while (i < state->num_philo)
 	{
 		data[i].philo = &philo[i];
 		data[i].state = state;

@@ -6,7 +6,7 @@
 /*   By: ttarumot <ttarumot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/11 11:59:22 by Jeanxavier        #+#    #+#             */
-/*   Updated: 2021/02/22 03:04:54 by ttarumot         ###   ########.fr       */
+/*   Updated: 2021/02/22 17:22:26 by ttarumot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,15 @@ int			main(int argc, char **argv)
 	if (!(state = ft_calloc(1, sizeof(t_state))))
 		return (error_status(NOMEM));
 	init_state(argc, argv, state);
-	if (!(philo = ft_calloc(state->n_philo, sizeof(t_philo))))
+	if (!(philo = ft_calloc(state->num_philo, sizeof(t_philo))))
 		return (error_status(NOMEM));
 	if (init_philosopher(philo, state))
 		return (1);
-	if (!(data = ft_calloc(state->n_philo, sizeof(t_data))))
+	if (!(data = ft_calloc(state->num_philo, sizeof(t_data))))
 		return (error_status(NOMEM));
 	if (launch(philo, state, data))
 		return (1);
-	if (monitor(philo, state))
+	if (monitor(state))
 		return (1);
 	free(philo);
 	free(state);

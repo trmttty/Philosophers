@@ -6,7 +6,7 @@
 /*   By: ttarumot <ttarumot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/11 13:27:31 by Jeanxavier        #+#    #+#             */
-/*   Updated: 2021/02/22 13:30:15 by ttarumot         ###   ########.fr       */
+/*   Updated: 2021/02/22 17:19:21 by ttarumot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <sys/time.h>
 # include <stdio.h>
 # include <pthread.h>
+# include <semaphore.h>
 # include "./libft/libft.h"
 
 # define INVAL			"Error: Invalid argument"
@@ -42,16 +43,17 @@
 
 typedef struct		s_state
 {
-	unsigned int	n_philo;
-	uint64_t		t_die;
-	uint64_t		t_eat;
-	uint64_t		t_sleep;
-	unsigned int	n_must_eat;
-	unsigned int	finish_meal_count;
-	uint64_t		t_start_usec;
-	uint64_t		t_start_sec;
-	int				option;
-	int				philo_dead;
+	unsigned int	num_philo;
+	uint64_t		time_die;
+	uint64_t		time_eat;
+	uint64_t		time_sleep;
+	uint64_t		time_start_usec;
+	uint64_t		time_start_sec;
+	unsigned int	num_must_eat;
+	unsigned int	num_finish_meal;
+	unsigned int	philo_dead;
+	sem_t			*sem_forks;
+	sem_t			*sem_display;
 }					t_state;
 
 typedef	struct		s_data
