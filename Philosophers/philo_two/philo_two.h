@@ -6,7 +6,7 @@
 /*   By: ttarumot <ttarumot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/11 12:08:00 by Jeanxavier        #+#    #+#             */
-/*   Updated: 2021/02/23 02:06:34 by ttarumot         ###   ########.fr       */
+/*   Updated: 2021/02/23 10:21:30 by ttarumot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void			philo_take_forks(t_data *data);
 void			philo_eat(t_data *data);
 void			philo_sleep(t_data *data);
 void			philo_think(t_data *data);
-void			print_timestamp(t_data *data, char *action);
+void			print_timestamp(t_data *data, uint64_t timestamp, char *action);
 void			display_all_meals_ate(t_state *state);
 
 #endif

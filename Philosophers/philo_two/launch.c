@@ -6,7 +6,7 @@
 /*   By: ttarumot <ttarumot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/19 13:31:24 by ttarumot          #+#    #+#             */
-/*   Updated: 2021/02/23 02:36:50 by ttarumot         ###   ########.fr       */
+/*   Updated: 2021/02/23 11:37:09 by ttarumot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,12 @@ void		*check_alive(void *data)
 	state = ((t_data*)data)->state;
 	usleep(state->time_die * 1000);
 	current_time = get_duration_time(state);
-	if (!philo->dead && current_time - philo->last_meal_start >= state->time_die)
+	if (current_time - philo->last_meal_start >= state->time_die)
 	{
 		philo->dead = TRUE;
 		state->philo_dead = TRUE;
 		sem_wait(state->sem_display);
-		print_timestamp(data, EVENT_DEAD);
+		print_timestamp(data, current_time, EVENT_DEAD);
 	}
 	return (NULL);
 }
