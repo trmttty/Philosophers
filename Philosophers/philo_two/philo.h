@@ -6,7 +6,7 @@
 /*   By: ttarumot <ttarumot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/11 13:27:31 by Jeanxavier        #+#    #+#             */
-/*   Updated: 2021/02/23 18:46:20 by ttarumot         ###   ########.fr       */
+/*   Updated: 2021/02/23 22:36:58 by ttarumot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ typedef struct		s_state
 	unsigned int	num_must_eat;
 	unsigned int	num_finish_meal;
 	unsigned int	philo_dead;
+	unsigned int	thread_error;
 	sem_t			*sem_forks;
 	sem_t			*sem_display;
 }					t_state;
@@ -70,6 +71,7 @@ int					parsing_manager(t_state *state);
 int					data_manager(int ac, char **av, t_state *state);
 int					check_argument(int ac, char **av, int *prog_arg);
 int					error_status(char *message);
+void				*error_exit(t_state *state, char *message);
 int64_t				ft_atoi64(const char *str);
 uint64_t			ft_atou64(const char *str);
 

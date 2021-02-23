@@ -6,7 +6,7 @@
 /*   By: ttarumot <ttarumot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/19 13:31:24 by ttarumot          #+#    #+#             */
-/*   Updated: 2021/02/23 19:46:57 by ttarumot         ###   ########.fr       */
+/*   Updated: 2021/02/23 22:34:53 by ttarumot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void		*launch_philosophers(void *data)
 {
 	t_philo			*philo;
 	t_state			*state;
-	// pthread_t		thread;
+	pthread_t		thread;
 	unsigned int	i;
 
 	philo = ((t_data*)data)->philo;
@@ -44,16 +44,10 @@ void		*launch_philosophers(void *data)
 	i = 0;
 	while (!state->philo_dead && (!state->num_must_eat || i < state->num_must_eat))
 	{
-		// if (pthread_create(&thread, NULL, &check_alive, data))
-		// {
-		// 	sem_wait(state->sem_display);
-		// 	printf("ERROR CREATE\n");
-		// }
-		// if (pthread_detach(thread))
-		// {
-		// 	sem_wait(state->sem_display);
-		// 	printf("ERROR DETACH\n");
-		// }
+		if (pthread_create(&thread, NULL, &check_alive, data))
+			return (error_exit(state, PCREATE));
+		if (pthread_detach(thread))
+			return (error_exit(state, PDETACH));
 		philo_take_forks(data);
 		philo_eat(data);
 		philo_sleep(data);
@@ -79,11 +73,13 @@ int			launch(t_philo *philo, t_state *state, t_data *data)
 		if (pthread_create(&thread, NULL, &launch_philosophers, &data[i]))
 		{
 			sem_wait(state->sem_display);
-			printf("%u\n", i);
 			return (error_status(PCREATE));
 		}
 		if (pthread_detach(thread))
+		{
+			sem_wait(state->sem_display);
 			return (error_status(PDETACH));
+		}
 		i++;
 	}
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: ttarumot <ttarumot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/19 13:31:24 by ttarumot          #+#    #+#             */
-/*   Updated: 2021/02/22 18:44:45 by ttarumot         ###   ########.fr       */
+/*   Updated: 2021/02/23 22:39:56 by ttarumot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,11 @@ int			monitor(t_state *state)
 {
 	if (state->num_must_eat)
 	{
-		while (!state->philo_dead && (state->num_finish_meal< state->num_philo))
+		while (!state->thread_error && !state->philo_dead
+				&& (state->num_finish_meal < state->num_philo))
 			usleep(1000);
+		if (state->thread_error)
+			return (1);
 		if (!state->philo_dead)
 		{
 			if (sem_wait(state->sem_display))
@@ -27,8 +30,10 @@ int			monitor(t_state *state)
 	}
 	else
 	{
-		while (!state->philo_dead)
+		while (!state->thread_error && !state->philo_dead)
 			usleep(1000);
+		if (state->thread_error)
+			return (1);
 	}
 	return (0);
 }
