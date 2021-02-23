@@ -6,7 +6,7 @@
 /*   By: ttarumot <ttarumot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/11 13:27:31 by Jeanxavier        #+#    #+#             */
-/*   Updated: 2021/02/22 17:19:21 by ttarumot         ###   ########.fr       */
+/*   Updated: 2021/02/23 18:46:20 by ttarumot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <stdio.h>
 # include <pthread.h>
 # include <semaphore.h>
+# include <limits.h>
 # include "./libft/libft.h"
 
 # define INVAL			"Error: Invalid argument"
