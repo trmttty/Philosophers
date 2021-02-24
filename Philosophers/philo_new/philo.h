@@ -6,7 +6,7 @@
 /*   By: ttarumot <ttarumot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/11 13:27:31 by Jeanxavier        #+#    #+#             */
-/*   Updated: 2021/02/23 22:36:58 by ttarumot         ###   ########.fr       */
+/*   Updated: 2021/02/24 20:44:39 by ttarumot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <sys/time.h>
 # include <stdio.h>
 # include <pthread.h>
+# include <signal.h>
 # include <semaphore.h>
 # include <limits.h>
 # include "./libft/libft.h"
@@ -30,6 +31,7 @@
 # define PCREATE		"Error: Cannot create a new thread"
 # define PDETACH		"Error: Cannot detach a thread"
 # define GETTIME		"Error: Cannot get date and time"
+# define FORK			"Error: Create a new process"
 
 # define TRUE			1
 # define FALSE			0
@@ -71,7 +73,8 @@ int					parsing_manager(t_state *state);
 int					data_manager(int ac, char **av, t_state *state);
 int					check_argument(int ac, char **av, int *prog_arg);
 int					error_status(char *message);
-void				*error_exit(t_state *state, char *message);
+void				exit_status(char *message, int code);
+void				error_exit(t_state *state, char *message);
 int64_t				ft_atoi64(const char *str);
 uint64_t			ft_atou64(const char *str);
 

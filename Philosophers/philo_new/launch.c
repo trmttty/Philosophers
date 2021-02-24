@@ -6,7 +6,7 @@
 /*   By: ttarumot <ttarumot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/19 13:31:24 by ttarumot          #+#    #+#             */
-/*   Updated: 2021/02/24 14:58:13 by ttarumot         ###   ########.fr       */
+/*   Updated: 2021/02/24 20:59:35 by ttarumot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void		*check_alive(void *data)
 			state->philo_dead = TRUE;
 			sem_wait(state->sem_display);
 			print_timestamp(data, current_time, EVENT_DEAD);
+			exit(42);
 			break ;
 		}
 		else
@@ -37,7 +38,7 @@ void		*check_alive(void *data)
 	return (NULL);
 }
 
-void		*launch_philosophers(void *data)
+void		launch_philosophers(void *data)
 {
 	t_philo			*philo;
 	t_state			*state;
@@ -47,9 +48,9 @@ void		*launch_philosophers(void *data)
 	philo = ((t_data*)data)->philo;
 	state = ((t_data*)data)->state;
 	if (pthread_create(&thread, NULL, &check_alive, data))
-		return (error_exit(state, PCREATE));
+		exit_status(PCREATE, EXIT_FAILURE);
 	if (pthread_detach(thread))
-		return (error_exit(state, PDETACH));
+		exit_status(PDETACH, EXIT_FAILURE);
 	i = 0;
 	while (!state->philo_dead && (!state->num_must_eat || i < state->num_must_eat))
 	{
@@ -59,14 +60,15 @@ void		*launch_philosophers(void *data)
 		philo_think(data);
 		i++;
 	}
+	if (philo->dead)
+		exit(42);
 	if (state->num_must_eat && i == state->num_must_eat)
 		state->num_finish_meal++;
-	return (NULL);
+	exit(2);
 }
 
-int			launch(t_philo *philo, t_state *state, t_data *data)
+void			launch(t_philo *philo, t_state *state, t_data *data)
 {
-	pthread_t		thread;
 	unsigned int	i;
 
 	set_start_time(state);
@@ -75,17 +77,10 @@ int			launch(t_philo *philo, t_state *state, t_data *data)
 	{
 		data[i].philo = &philo[i];
 		data[i].state = state;
-		if (pthread_create(&thread, NULL, &launch_philosophers, &data[i]))
-		{
-			// sem_wait(state->sem_display);
-			return (error_status(PCREATE));
-		}
-		if (pthread_detach(thread))
-		{
-			// sem_wait(state->sem_display);
-			return (error_status(PDETACH));
-		}
+		if ((philo[i].pid = fork()) == -1)
+			exit_status(FORK, EXIT_FAILURE);
+		if (philo[i].pid == 0)
+			launch_philosophers(&data[i]);
 		i++;
 	}
-	return (0);
 }

@@ -6,13 +6,13 @@
 /*   By: ttarumot <ttarumot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/19 11:22:07 by ttarumot          #+#    #+#             */
-/*   Updated: 2021/02/24 14:46:36 by ttarumot         ###   ########.fr       */
+/*   Updated: 2021/02/24 21:21:51 by ttarumot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_two.h"
 
-int			init_state(int argc, char **argv, t_state *state)
+void		init_state(int argc, char **argv, t_state *state)
 {
 	state->num_philo = ft_atou64(argv[1]);
 	state->time_die = ft_atou64(argv[2]);
@@ -23,10 +23,9 @@ int			init_state(int argc, char **argv, t_state *state)
 	sem_unlink("fork");
 	sem_unlink("display");
 	if ((state->sem_forks = sem_open("fork", O_CREAT | O_EXCL, S_IRWXU, state->num_philo / 2)) == SEM_FAILED)
-		return (error_status(SEMOPEN));
+		exit_status(SEMOPEN, EXIT_FAILURE);
 	if ((state->sem_display = sem_open("display", O_CREAT | O_EXCL, S_IRWXU, 1)) == SEM_FAILED)
-		return (error_status(SEMOPEN));
-	return (0);
+		exit_status(SEMOPEN, EXIT_FAILURE);
 }
 
 int			init_philosopher(t_philo *philo, t_state *state)
