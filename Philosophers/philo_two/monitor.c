@@ -6,7 +6,7 @@
 /*   By: ttarumot <ttarumot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/19 13:31:24 by ttarumot          #+#    #+#             */
-/*   Updated: 2021/02/23 22:39:56 by ttarumot         ###   ########.fr       */
+/*   Updated: 2021/02/24 14:52:28 by ttarumot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,9 @@
 
 int			monitor(t_state *state)
 {
-	if (state->num_must_eat)
+	if (state->philo_dead)
+		usleep(10000);
+	else if (state->num_must_eat)
 	{
 		while (!state->thread_error && !state->philo_dead
 				&& (state->num_finish_meal < state->num_philo))

@@ -6,7 +6,7 @@
 /*   By: ttarumot <ttarumot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/19 13:31:24 by ttarumot          #+#    #+#             */
-/*   Updated: 2021/02/23 22:34:53 by ttarumot         ###   ########.fr       */
+/*   Updated: 2021/02/24 14:58:13 by ttarumot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,19 @@ void		*check_alive(void *data)
 
 	philo = ((t_data*)data)->philo;
 	state = ((t_data*)data)->state;
-	usleep(state->time_die * 1000);
-	current_time = get_duration_time(state);
-	if (current_time - philo->last_meal_start >= state->time_die * 1000)
+	while (1)
 	{
-		philo->dead = TRUE;
-		state->philo_dead = TRUE;
-		sem_wait(state->sem_display);
-		print_timestamp(data, current_time, EVENT_DEAD);
+		current_time = get_duration_time(state);
+		if (current_time - philo->last_meal_start >= state->time_die * 1000)
+		{
+			philo->dead = TRUE;
+			state->philo_dead = TRUE;
+			sem_wait(state->sem_display);
+			print_timestamp(data, current_time, EVENT_DEAD);
+			break ;
+		}
+		else
+			usleep(state->time_die * 1000 - (current_time - philo->last_meal_start));
 	}
 	return (NULL);
 }
@@ -41,13 +46,13 @@ void		*launch_philosophers(void *data)
 
 	philo = ((t_data*)data)->philo;
 	state = ((t_data*)data)->state;
+	if (pthread_create(&thread, NULL, &check_alive, data))
+		return (error_exit(state, PCREATE));
+	if (pthread_detach(thread))
+		return (error_exit(state, PDETACH));
 	i = 0;
 	while (!state->philo_dead && (!state->num_must_eat || i < state->num_must_eat))
 	{
-		if (pthread_create(&thread, NULL, &check_alive, data))
-			return (error_exit(state, PCREATE));
-		if (pthread_detach(thread))
-			return (error_exit(state, PDETACH));
 		philo_take_forks(data);
 		philo_eat(data);
 		philo_sleep(data);
@@ -72,12 +77,12 @@ int			launch(t_philo *philo, t_state *state, t_data *data)
 		data[i].state = state;
 		if (pthread_create(&thread, NULL, &launch_philosophers, &data[i]))
 		{
-			sem_wait(state->sem_display);
+			// sem_wait(state->sem_display);
 			return (error_status(PCREATE));
 		}
 		if (pthread_detach(thread))
 		{
-			sem_wait(state->sem_display);
+			// sem_wait(state->sem_display);
 			return (error_status(PDETACH));
 		}
 		i++;

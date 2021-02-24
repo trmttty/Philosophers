@@ -6,7 +6,7 @@
 /*   By: ttarumot <ttarumot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/19 11:22:07 by ttarumot          #+#    #+#             */
-/*   Updated: 2021/02/23 22:14:41 by ttarumot         ###   ########.fr       */
+/*   Updated: 2021/02/24 14:46:36 by ttarumot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int			init_state(int argc, char **argv, t_state *state)
 	return (0);
 }
 
-void		init_philosopher(t_philo *philo, t_state *state)
+int			init_philosopher(t_philo *philo, t_state *state)
 {
 	unsigned int	i;
 
@@ -39,4 +39,5 @@ void		init_philosopher(t_philo *philo, t_state *state)
 		philo[i].id = i + 1;
 		i++;
 	}
+	return (0);
 }
