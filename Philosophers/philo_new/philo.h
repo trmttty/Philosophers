@@ -6,7 +6,7 @@
 /*   By: ttarumot <ttarumot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/11 13:27:31 by Jeanxavier        #+#    #+#             */
-/*   Updated: 2021/02/24 20:44:39 by ttarumot         ###   ########.fr       */
+/*   Updated: 2021/02/24 22:09:44 by ttarumot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,9 @@
 
 # define TRUE			1
 # define FALSE			0
+
+# define EXIT_PHILO_DEAD		10
+# define EXIT_FINISH_MEALS		11
 
 # define EVENT_FORK		"has taken a fork"
 # define EVENT_EAT		"is eating"
@@ -73,7 +76,7 @@ int					parsing_manager(t_state *state);
 int					data_manager(int ac, char **av, t_state *state);
 int					check_argument(int ac, char **av, int *prog_arg);
 int					error_status(char *message);
-void				exit_status(char *message, int code);
+void				exit_status(char *message);
 void				error_exit(t_state *state, char *message);
 int64_t				ft_atoi64(const char *str);
 uint64_t			ft_atou64(const char *str);

@@ -6,7 +6,7 @@
 /*   By: ttarumot <ttarumot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/11 12:08:00 by Jeanxavier        #+#    #+#             */
-/*   Updated: 2021/02/24 21:22:51 by ttarumot         ###   ########.fr       */
+/*   Updated: 2021/02/25 02:03:50 by ttarumot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,13 @@ typedef struct			s_philo
 */
 int				check_args(int argc, char **argv);
 void			init_state(int argc, char **argv, t_state *state);
-int				init_philosopher(t_philo *philo, t_state *state);
+void			init_philosopher(t_philo *philo, t_state *state);
 void			set_start_time(t_state *state);
 uint64_t		get_duration_time(t_state *state);
 void			monitor(t_philo *philo, t_state *state);
 void			launch(t_philo *philo, t_state *state, t_data *data);
 void			display_finish_all_meals(t_state *state);
+void			kill_philosophers(t_state *state, t_philo *philo);
 
 
 void			philo_take_forks(t_data *data);
