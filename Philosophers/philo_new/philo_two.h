@@ -6,7 +6,7 @@
 /*   By: ttarumot <ttarumot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/11 12:08:00 by Jeanxavier        #+#    #+#             */
-/*   Updated: 2021/02/25 22:10:23 by ttarumot         ###   ########.fr       */
+/*   Updated: 2021/02/25 22:31:03 by ttarumot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@
 # include <signal.h>
 # include <semaphore.h>
 # include <limits.h>
-# include "./libft/libft.h"
 
 # define TRUE					1
 # define FALSE					0
@@ -38,11 +37,11 @@
 # define PDETACH		"Error: Cannot detach a thread"
 # define FORK			"Error: Create a new process"
 
-# define EVENT_FORK		"has taken a fork"
-# define EVENT_EAT		"is eating"
-# define EVENT_SLEEP	"is sleeping"
-# define EVENT_THINK	"is thinking"
-# define EVENT_DEAD		"is dead"
+# define ACTION_FORK	"has taken a fork"
+# define ACTION_EAT		"is eating"
+# define ACTION_SLEEP	"is sleeping"
+# define ACTION_THINK	"is thinking"
+# define ACTION_DEAD	"is dead"
 
 typedef struct		s_philo
 {
@@ -126,7 +125,8 @@ uint64_t			get_duration_time(t_state *state);
 */
 int					check_args(int argc, char **argv);
 int					is_uint(const char *str);
-int64_t				ft_atoi64(const char *str);
 uint64_t			ft_atou64(const char *str);
+void				*ft_calloc(size_t count, size_t size);
+void				ft_putendl_fd(char *s, int fd);
 
 #endif
