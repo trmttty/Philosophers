@@ -6,7 +6,7 @@
 /*   By: ttarumot <ttarumot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/11 11:59:22 by Jeanxavier        #+#    #+#             */
-/*   Updated: 2021/02/25 10:30:43 by ttarumot         ###   ########.fr       */
+/*   Updated: 2021/02/25 23:36:35 by ttarumot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,6 @@ int			main(int argc, char **argv)
 		exit_status(NOMEM);
 	launch(philo, state, data);
 	monitor(philo, state, data);
-	free(philo);
-	free(state);
-	free(data);
+	clear_all(philo, state, data);
 	return (0);
 }

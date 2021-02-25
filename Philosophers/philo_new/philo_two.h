@@ -6,7 +6,7 @@
 /*   By: ttarumot <ttarumot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/11 12:08:00 by Jeanxavier        #+#    #+#             */
-/*   Updated: 2021/02/25 22:31:03 by ttarumot         ###   ########.fr       */
+/*   Updated: 2021/02/25 23:39:43 by ttarumot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,11 @@ void				delete_philosophers(t_philo *philo, t_state *state);
 */
 void				set_start_time(t_state *state);
 uint64_t			get_duration_time(t_state *state);
+
+/*
+** clear.c
+*/
+void				clear_all(t_philo *philo, t_state *state, t_data *data);
 
 /*
 ** utils.c

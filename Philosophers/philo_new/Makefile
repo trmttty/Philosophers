@@ -12,6 +12,7 @@ SRC_RT = main.c \
 			monitor.c \
 			time.c \
 			exit.c \
+			clear.c \
 			utils_1.c \
 			utils_2.c
 
