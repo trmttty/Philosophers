@@ -6,7 +6,7 @@
 /*   By: ttarumot <ttarumot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/11 11:59:22 by Jeanxavier        #+#    #+#             */
-/*   Updated: 2021/02/24 22:10:05 by ttarumot         ###   ########.fr       */
+/*   Updated: 2021/02/25 10:30:43 by ttarumot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int			main(int argc, char **argv)
 	if (!(data = ft_calloc(state->num_philo, sizeof(t_data))))
 		exit_status(NOMEM);
 	launch(philo, state, data);
-	monitor(philo, state);
+	monitor(philo, state, data);
 	free(philo);
 	free(state);
 	free(data);

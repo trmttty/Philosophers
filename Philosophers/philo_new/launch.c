@@ -6,7 +6,7 @@
 /*   By: ttarumot <ttarumot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/19 13:31:24 by ttarumot          #+#    #+#             */
-/*   Updated: 2021/02/25 09:25:33 by ttarumot         ###   ########.fr       */
+/*   Updated: 2021/02/25 14:07:06 by ttarumot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void		*check_alive(void *data)
 {
 	t_state			*state;
 	t_philo			*philo;
-	unsigned int	current_time;
+	int				current_time;
 
 	philo = ((t_data*)data)->philo;
 	state = ((t_data*)data)->state;
@@ -43,7 +43,7 @@ void		launch_philosophers(void *data)
 	t_philo			*philo;
 	t_state			*state;
 	pthread_t		thread;
-	unsigned int	i;
+	int				i;
 
 	philo = ((t_data*)data)->philo;
 	state = ((t_data*)data)->state;
@@ -51,23 +51,22 @@ void		launch_philosophers(void *data)
 		error_exit(state, PCREATE);
 	if (pthread_detach(thread))
 		error_exit(state, PDETACH);
-	i = 0;
-	while (!state->philo_dead && (!state->num_must_eat || i < state->num_must_eat))
+	i = 1;
+	while (1)
 	{
 		philo_take_forks(data);
 		philo_eat(data);
+		if (i == state->num_must_eat)
+			sem_post(state->sem_finish_meals);
 		philo_sleep(data);
 		philo_think(data);
 		i++;
 	}
-	if (philo->dead)
-		exit(EXIT_PHILO_DEAD);
-	exit(EXIT_FINISH_MEALS);
 }
 
 void			launch(t_philo *philo, t_state *state, t_data *data)
 {
-	unsigned int	i;
+	int		i;
 
 	set_start_time(state);
 	i = 0;
@@ -82,7 +81,6 @@ void			launch(t_philo *philo, t_state *state, t_data *data)
 		}
 		if (philo[i].pid == 0)
 			launch_philosophers(&data[i]);
-		usleep(100);
 		i++;
 	}
 }
