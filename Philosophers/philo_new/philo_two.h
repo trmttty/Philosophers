@@ -6,7 +6,7 @@
 /*   By: ttarumot <ttarumot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/11 12:08:00 by Jeanxavier        #+#    #+#             */
-/*   Updated: 2021/02/25 14:37:36 by ttarumot         ###   ########.fr       */
+/*   Updated: 2021/02/25 17:32:17 by ttarumot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,14 +57,14 @@ typedef struct		s_philo
 
 typedef struct		s_state
 {
-	int				num_philo;
+	uint64_t		num_philo;
 	uint64_t		time_die;
 	uint64_t		time_eat;
 	uint64_t		time_sleep;
 	uint64_t		time_start_usec;
 	uint64_t		time_start_sec;
-	int				num_must_eat;
-	int				num_finish_meal;
+	uint64_t		num_must_eat;
+	uint64_t		num_finish_meal;
 	int				philo_dead;
 	int				thread_error;
 	sem_t			*sem_forks;
@@ -126,6 +126,7 @@ uint64_t		get_duration_time(t_state *state);
 ** utils.c
 */
 int				check_args(int argc, char **argv);
+int				is_uint(const char *str);
 int64_t			ft_atoi64(const char *str);
 uint64_t		ft_atou64(const char *str);
 

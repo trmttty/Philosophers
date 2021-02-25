@@ -6,7 +6,7 @@
 /*   By: ttarumot <ttarumot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/19 11:30:51 by ttarumot          #+#    #+#             */
-/*   Updated: 2021/02/22 00:34:31 by ttarumot         ###   ########.fr       */
+/*   Updated: 2021/02/25 15:57:20 by ttarumot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int			check_args(int argc, char **argv)
 	argv++;
 	while (*argv)
 	{
-		if (ft_atoi64(*argv) < 0)
+		if (!is_uint(*argv))
 			return (1);
 		argv++;
 	}
@@ -57,6 +57,21 @@ int64_t		ft_atoi64(const char *str)
 		str++;
 	}
 	return (sign * set_number(str));
+}
+
+int			is_uint(const char *str)
+{
+	while (is_wspace(*str))
+		str++;
+	if (*str == '-')
+		return (0);
+	while (*str)
+	{
+		if (*str < '0' && *str > '9')
+			return (0);
+		str++;
+	}
+	return (1);
 }
 
 uint64_t		ft_atou64(const char *str)

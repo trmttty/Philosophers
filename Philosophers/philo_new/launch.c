@@ -6,7 +6,7 @@
 /*   By: ttarumot <ttarumot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/19 13:31:24 by ttarumot          #+#    #+#             */
-/*   Updated: 2021/02/25 14:07:06 by ttarumot         ###   ########.fr       */
+/*   Updated: 2021/02/25 17:34:06 by ttarumot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void		launch_philosophers(void *data)
 	t_philo			*philo;
 	t_state			*state;
 	pthread_t		thread;
-	int				i;
+	uint64_t		i;
 
 	philo = ((t_data*)data)->philo;
 	state = ((t_data*)data)->state;
@@ -66,7 +66,7 @@ void		launch_philosophers(void *data)
 
 void			launch(t_philo *philo, t_state *state, t_data *data)
 {
-	int		i;
+	uint64_t	i;
 
 	set_start_time(state);
 	i = 0;

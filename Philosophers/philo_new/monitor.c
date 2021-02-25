@@ -6,7 +6,7 @@
 /*   By: ttarumot <ttarumot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/19 13:31:24 by ttarumot          #+#    #+#             */
-/*   Updated: 2021/02/25 14:08:19 by ttarumot         ###   ########.fr       */
+/*   Updated: 2021/02/25 17:35:29 by ttarumot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void		delete_philosophers(t_philo *philo, t_state *state)
 {
-	int		i;
+	uint64_t	i;
 
 	i = 0;
 	while (i < state->num_philo)
@@ -40,7 +40,7 @@ void		*monitor_finish_meals(void *data)
 {
 	t_state			*state;
 	t_philo			*philo;
-	int				i;
+	uint64_t		i;
 
 	philo = ((t_data*)data)->philo;
 	state = ((t_data*)data)->state;
@@ -59,7 +59,7 @@ void		*monitor_finish_meals(void *data)
 
 void		monitor(t_philo *philo, t_state *state, t_data *data)
 {
-	int			i;
+	uint64_t	i;
 	int			status;
 	pthread_t	thread;
 

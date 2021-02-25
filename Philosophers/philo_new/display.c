@@ -6,7 +6,7 @@
 /*   By: ttarumot <ttarumot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/19 14:05:34 by ttarumot          #+#    #+#             */
-/*   Updated: 2021/02/25 13:35:07 by ttarumot         ###   ########.fr       */
+/*   Updated: 2021/02/25 17:33:21 by ttarumot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void		display_finish_all_meals(t_state *state)
 	uint64_t	current_time;
 
 	current_time = get_duration_time(state);
-	printf("%llu All the philosophers have finished at least %u meals\n",
+	printf("%llu All the philosophers have finished at least %llu meals\n",
 			current_time / 1000, state->num_must_eat);
 }
 
