@@ -6,7 +6,7 @@
 /*   By: ttarumot <ttarumot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/19 13:31:24 by ttarumot          #+#    #+#             */
-/*   Updated: 2021/02/25 09:24:47 by ttarumot         ###   ########.fr       */
+/*   Updated: 2021/02/25 09:27:03 by ttarumot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void		monitor(t_philo *philo, t_state *state)
 			break ;
 		i++;
 	}
-	kill_philosophers(state, philo);
+	delete_philosophers(state, philo);
 	if (status == EXIT_FINISH_MEALS)
 	{
 		sem_wait(state->sem_display);
