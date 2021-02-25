@@ -6,7 +6,7 @@
 /*   By: ttarumot <ttarumot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/19 13:31:24 by ttarumot          #+#    #+#             */
-/*   Updated: 2021/02/25 17:34:06 by ttarumot         ###   ########.fr       */
+/*   Updated: 2021/02/25 18:02:36 by ttarumot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ void		*check_alive(void *data)
 			break ;
 		}
 		else
-			usleep(state->time_die * 1000 - (current_time - philo->last_meal_start));
+			usleep(state->time_die * 1000
+					- (current_time - philo->last_meal_start));
 	}
 	return (NULL);
 }
@@ -64,7 +65,7 @@ void		launch_philosophers(void *data)
 	}
 }
 
-void			launch(t_philo *philo, t_state *state, t_data *data)
+void		launch(t_philo *philo, t_state *state, t_data *data)
 {
 	uint64_t	i;
 

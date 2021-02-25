@@ -6,7 +6,7 @@
 /*   By: ttarumot <ttarumot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/19 11:22:07 by ttarumot          #+#    #+#             */
-/*   Updated: 2021/02/25 17:33:40 by ttarumot         ###   ########.fr       */
+/*   Updated: 2021/02/25 21:13:22 by ttarumot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,14 @@ void		init_state(int argc, char **argv, t_state *state)
 	if (argc == 6)
 		state->num_must_eat = ft_atou64(argv[5]);
 	sem_unlink("fork");
-	if ((state->sem_forks = sem_open("fork", O_CREAT | O_EXCL, S_IRWXU, state->num_philo / 2)) == SEM_FAILED)
+	// if ((state->sem_forks = sem_open("fork", O_CREAT | O_EXCL, S_IRWXU, state->num_philo / 2)) == SEM_FAILED)
+	if ((state->sem_forks = sem_open("fork", O_CREAT, S_IRWXU, state->num_philo / 2)) == SEM_FAILED)
 		exit_status(SEMOPEN);
 	sem_unlink("display");
-	if ((state->sem_display = sem_open("display", O_CREAT | O_EXCL, S_IRWXU, 1)) == SEM_FAILED)
+	if ((state->sem_display = sem_open("display", O_CREAT, S_IRWXU, 1)) == SEM_FAILED)
 		exit_status(SEMOPEN);
 	sem_unlink("finish_meals");
-	if ((state->sem_finish_meals = sem_open("finish_meals", O_CREAT | O_EXCL, S_IRWXU, 1)) == SEM_FAILED)
+	if ((state->sem_finish_meals = sem_open("finish_meals", O_CREAT, S_IRWXU, 1)) == SEM_FAILED)
 		exit_status(SEMOPEN);
 }
 

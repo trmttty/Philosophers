@@ -6,7 +6,7 @@
 /*   By: ttarumot <ttarumot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/19 11:41:46 by ttarumot          #+#    #+#             */
-/*   Updated: 2021/02/25 14:02:12 by ttarumot         ###   ########.fr       */
+/*   Updated: 2021/02/25 17:59:57 by ttarumot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ void			set_start_time(t_state *state)
 	struct timeval	current_time;
 
 	gettimeofday(&current_time, NULL);
-    state->time_start_usec = current_time.tv_usec;
-    state->time_start_sec = current_time.tv_sec;
+	state->time_start_usec = current_time.tv_usec;
+	state->time_start_sec = current_time.tv_sec;
 }
 
 uint64_t		get_duration_time(t_state *state)

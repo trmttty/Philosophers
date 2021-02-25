@@ -6,13 +6,12 @@
 /*   By: ttarumot <ttarumot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/11 12:08:00 by Jeanxavier        #+#    #+#             */
-/*   Updated: 2021/02/25 17:32:17 by ttarumot         ###   ########.fr       */
+/*   Updated: 2021/02/25 22:10:23 by ttarumot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_TWO_H
 # define PHILO_TWO_H
-
 
 # include <unistd.h>
 # include <string.h>
@@ -27,6 +26,7 @@
 
 # define TRUE					1
 # define FALSE					0
+
 # define EXIT_PHILO_DEAD		10
 # define EXIT_FINISH_MEALS		11
 
@@ -36,7 +36,6 @@
 # define SEMWAIT		"Error: Cannot lock a semaphore"
 # define PCREATE		"Error: Cannot create a new thread"
 # define PDETACH		"Error: Cannot detach a thread"
-# define GETTIME		"Error: Cannot get date and time"
 # define FORK			"Error: Create a new process"
 
 # define EVENT_FORK		"has taken a fork"
@@ -81,53 +80,53 @@ typedef	struct		s_data
 /*
 ** action.c
 */
-void			philo_take_forks(t_data *data);
-void			philo_eat(t_data *data);
-void			philo_sleep(t_data *data);
-void			philo_think(t_data *data);
+void				philo_take_forks(t_data *data);
+void				philo_eat(t_data *data);
+void				philo_sleep(t_data *data);
+void				philo_think(t_data *data);
 
 /*
 ** display.c
 */
-void			print_timestamp(t_data *data, uint64_t timestamp, char *action);
-void			display_finish_all_meals(t_state *state);
+void				print_timestamp(t_data *data, uint64_t stamp, char *action);
+void				display_finish_all_meals(t_state *state);
 
 /*
 ** exit.c
 */
-int				error_status(char *message);
-void			error_exit(t_state *state, char *message);
-void			exit_status(char *message);
+int					error_status(char *message);
+void				error_exit(t_state *state, char *message);
+void				exit_status(char *message);
 
 /*
 ** init.c
 */
-void			init_state(int argc, char **argv, t_state *state);
-void			init_philosopher(t_philo *philo, t_state *state);
+void				init_state(int argc, char **argv, t_state *state);
+void				init_philosopher(t_philo *philo, t_state *state);
 
 /*
 ** launch.c
 */
-void			launch(t_philo *philo, t_state *state, t_data *data);
+void				launch(t_philo *philo, t_state *state, t_data *data);
 
 /*
 ** monitor.c
 */
-void			monitor(t_philo *philo, t_state *state, t_data *data);
-void			delete_philosophers(t_philo *philo, t_state *state);
+void				monitor(t_philo *philo, t_state *state, t_data *data);
+void				delete_philosophers(t_philo *philo, t_state *state);
 
 /*
 ** time.c
 */
-void			set_start_time(t_state *state);
-uint64_t		get_duration_time(t_state *state);
+void				set_start_time(t_state *state);
+uint64_t			get_duration_time(t_state *state);
 
 /*
 ** utils.c
 */
-int				check_args(int argc, char **argv);
-int				is_uint(const char *str);
-int64_t			ft_atoi64(const char *str);
-uint64_t		ft_atou64(const char *str);
+int					check_args(int argc, char **argv);
+int					is_uint(const char *str);
+int64_t				ft_atoi64(const char *str);
+uint64_t			ft_atou64(const char *str);
 
 #endif

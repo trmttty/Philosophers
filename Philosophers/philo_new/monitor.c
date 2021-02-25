@@ -6,7 +6,7 @@
 /*   By: ttarumot <ttarumot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/19 13:31:24 by ttarumot          #+#    #+#             */
-/*   Updated: 2021/02/25 17:35:29 by ttarumot         ###   ########.fr       */
+/*   Updated: 2021/02/25 22:06:44 by ttarumot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void		delete_philosophers(t_philo *philo, t_state *state)
 		kill(philo[i++].pid, SIGKILL);
 }
 
-int			check_status(t_state *state)
+static int	check_status(t_state *state)
 {
 	int		status;
 
@@ -35,8 +35,7 @@ int			check_status(t_state *state)
 	return (0);
 }
 
-
-void		*monitor_finish_meals(void *data)
+static void	*monitor_finish_meals(void *data)
 {
 	t_state			*state;
 	t_philo			*philo;
@@ -53,29 +52,32 @@ void		*monitor_finish_meals(void *data)
 	sem_wait(state->sem_display);
 	display_finish_all_meals(state);
 	delete_philosophers(philo, state);
-	exit(EXIT_SUCCESS);
 	return (NULL);
+}
+
+static void	monitor_meals(t_philo *philo, t_state *state, t_data *data)
+{
+	pthread_t	thread;
+
+	if (pthread_create(&thread, NULL, &monitor_finish_meals, data))
+	{
+		delete_philosophers(philo, state);
+		error_exit(state, PCREATE);
+	}
+	if (pthread_detach(thread))
+	{
+		delete_philosophers(philo, state);
+		error_exit(state, PDETACH);
+	}
 }
 
 void		monitor(t_philo *philo, t_state *state, t_data *data)
 {
 	uint64_t	i;
 	int			status;
-	pthread_t	thread;
 
 	if (state->num_must_eat)
-	{
-		if (pthread_create(&thread, NULL, &monitor_finish_meals, data))
-		{
-			delete_philosophers(philo, state);
-			error_exit(state, PCREATE);
-		}
-		if (pthread_detach(thread))
-		{
-			delete_philosophers(philo, state);
-			error_exit(state, PDETACH);
-		}
-	}
+		monitor_meals(philo, state, data);
 	i = 0;
 	while (i < state->num_philo)
 	{

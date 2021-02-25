@@ -6,13 +6,13 @@
 /*   By: ttarumot <ttarumot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/19 11:30:51 by ttarumot          #+#    #+#             */
-/*   Updated: 2021/02/25 15:57:20 by ttarumot         ###   ########.fr       */
+/*   Updated: 2021/02/25 18:05:31 by ttarumot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_two.h"
 
-int			check_args(int argc, char **argv)
+int				check_args(int argc, char **argv)
 {
 	if (argc != 5 && argc != 6)
 		return (1);
@@ -26,7 +26,7 @@ int			check_args(int argc, char **argv)
 	return (0);
 }
 
-static int	is_wspace(const char c)
+static int		is_wspace(const char c)
 {
 	return (c == '\t' || c == '\n' || c == '\v' \
 			|| c == '\f' || c == '\r' || c == ' ');
@@ -42,24 +42,7 @@ static uint64_t	set_number(const char *str)
 	return (nb);
 }
 
-int64_t		ft_atoi64(const char *str)
-{
-	int64_t	sign;
-
-	sign = 1;
-	while (is_wspace(*str))
-		str++;
-	if (*str == '+')
-		str++;
-	else if (*str == '-')
-	{
-		sign = -1;
-		str++;
-	}
-	return (sign * set_number(str));
-}
-
-int			is_uint(const char *str)
+int				is_uint(const char *str)
 {
 	while (is_wspace(*str))
 		str++;
