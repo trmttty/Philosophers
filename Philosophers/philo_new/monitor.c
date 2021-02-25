@@ -6,13 +6,13 @@
 /*   By: ttarumot <ttarumot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/19 13:31:24 by ttarumot          #+#    #+#             */
-/*   Updated: 2021/02/25 02:07:17 by ttarumot         ###   ########.fr       */
+/*   Updated: 2021/02/25 09:24:47 by ttarumot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_two.h"
 
-void		kill_philosophers(t_state *state, t_philo *philo)
+void		delete_philosophers(t_philo *philo, t_state *state)
 {
 	unsigned int	i;
 

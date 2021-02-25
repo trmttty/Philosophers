@@ -6,7 +6,7 @@
 /*   By: ttarumot <ttarumot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/19 13:31:24 by ttarumot          #+#    #+#             */
-/*   Updated: 2021/02/25 02:04:03 by ttarumot         ###   ########.fr       */
+/*   Updated: 2021/02/25 09:25:33 by ttarumot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,11 +77,12 @@ void			launch(t_philo *philo, t_state *state, t_data *data)
 		data[i].state = state;
 		if ((philo[i].pid = fork()) == -1)
 		{
-			kill_philosophers(state, philo);
+			delete_philosophers(philo, state);
 			error_exit(state, FORK);
 		}
 		if (philo[i].pid == 0)
 			launch_philosophers(&data[i]);
+		usleep(100);
 		i++;
 	}
 }
