@@ -6,7 +6,7 @@
 /*   By: ttarumot <ttarumot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/19 11:22:07 by ttarumot          #+#    #+#             */
-/*   Updated: 2021/02/24 14:46:36 by ttarumot         ###   ########.fr       */
+/*   Updated: 2021/02/26 16:08:56 by ttarumot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,12 @@ int			init_state(int argc, char **argv, t_state *state)
 	if (argc == 6)
 		state->num_must_eat = ft_atou64(argv[5]);
 	sem_unlink("fork");
-	sem_unlink("display");
-	if ((state->sem_forks = sem_open("fork", O_CREAT | O_EXCL, S_IRWXU, state->num_philo / 2)) == SEM_FAILED)
+	state->sem_forks = sem_open("fork", O_CREAT, 700, state->num_philo / 2);
+	if (state->sem_forks == SEM_FAILED)
 		return (error_status(SEMOPEN));
-	if ((state->sem_display = sem_open("display", O_CREAT | O_EXCL, S_IRWXU, 1)) == SEM_FAILED)
+	sem_unlink("display");
+	state->sem_display = sem_open("display", O_CREAT, 700, 1);
+	if (state->sem_display == SEM_FAILED)
 		return (error_status(SEMOPEN));
 	return (0);
 }

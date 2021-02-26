@@ -6,13 +6,13 @@
 /*   By: ttarumot <ttarumot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/19 13:31:24 by ttarumot          #+#    #+#             */
-/*   Updated: 2021/02/24 14:58:13 by ttarumot         ###   ########.fr       */
+/*   Updated: 2021/02/26 16:11:07 by ttarumot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_two.h"
 
-void		*check_alive(void *data)
+static void	*check_alive(void *data)
 {
 	t_state			*state;
 	t_philo			*philo;
@@ -28,7 +28,7 @@ void		*check_alive(void *data)
 			philo->dead = TRUE;
 			state->philo_dead = TRUE;
 			sem_wait(state->sem_display);
-			print_timestamp(data, current_time, EVENT_DEAD);
+			print_timestamp(data, current_time, ACTION_DEAD);
 			break ;
 		}
 		else
@@ -37,7 +37,7 @@ void		*check_alive(void *data)
 	return (NULL);
 }
 
-void		*launch_philosophers(void *data)
+static void	*launch_philosophers(void *data)
 {
 	t_philo			*philo;
 	t_state			*state;
@@ -76,15 +76,9 @@ int			launch(t_philo *philo, t_state *state, t_data *data)
 		data[i].philo = &philo[i];
 		data[i].state = state;
 		if (pthread_create(&thread, NULL, &launch_philosophers, &data[i]))
-		{
-			// sem_wait(state->sem_display);
 			return (error_status(PCREATE));
-		}
 		if (pthread_detach(thread))
-		{
-			// sem_wait(state->sem_display);
 			return (error_status(PDETACH));
-		}
 		i++;
 	}
 	return (0);
