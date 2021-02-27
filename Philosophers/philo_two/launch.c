@@ -6,7 +6,7 @@
 /*   By: ttarumot <ttarumot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/19 13:31:24 by ttarumot          #+#    #+#             */
-/*   Updated: 2021/02/27 11:29:02 by ttarumot         ###   ########.fr       */
+/*   Updated: 2021/02/27 12:19:22 by ttarumot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ static void	*check_alive(void *data)
 		current_time = get_duration_time(state);
 		if (current_time - philo->last_meal_start >= state->time_die * 1000)
 		{
-			philo->dead = TRUE;
 			state->philo_dead = TRUE;
 			sem_wait(state->sem_display);
 			print_timestamp(data, current_time, ACTION_DEAD);
@@ -44,7 +43,6 @@ static void	*launch_philosophers(void *data)
 	t_philo			*philo;
 	t_state			*state;
 	pthread_t		thread;
-	uint64_t		i;
 
 	philo = ((t_data*)data)->philo;
 	state = ((t_data*)data)->state;
@@ -52,16 +50,12 @@ static void	*launch_philosophers(void *data)
 		return (error_exit(state, PCREATE));
 	if (pthread_detach(thread))
 		return (error_exit(state, PDETACH));
-	i = 1;
 	while (!state->philo_dead)
 	{
 		philo_take_forks(data);
 		philo_eat(data);
-		if (state->num_must_eat && i == state->num_must_eat)
-			state->num_finish_meal++;
 		philo_sleep(data);
 		philo_think(data);
-		i++;
 	}
 	return (NULL);
 }
