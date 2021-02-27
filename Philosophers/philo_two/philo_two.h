@@ -6,7 +6,7 @@
 /*   By: ttarumot <ttarumot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/11 12:08:00 by Jeanxavier        #+#    #+#             */
-/*   Updated: 2021/02/27 12:19:13 by ttarumot         ###   ########.fr       */
+/*   Updated: 2021/02/27 12:23:45 by ttarumot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@
 
 typedef struct		s_philo
 {
-	int				id;
+	uint64_t		id;
 	uint64_t		last_meal_start;
 	uint64_t		meal_count;
 }					t_philo;

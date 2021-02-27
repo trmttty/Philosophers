@@ -6,7 +6,7 @@
 /*   By: ttarumot <ttarumot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/19 14:05:34 by ttarumot          #+#    #+#             */
-/*   Updated: 2021/02/26 16:17:37 by ttarumot         ###   ########.fr       */
+/*   Updated: 2021/02/27 12:24:06 by ttarumot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,5 +23,5 @@ void		display_finish_all_meals(t_state *state)
 
 void		print_timestamp(t_data *data, uint64_t timestamp, char *action)
 {
-	printf("%llu %d %s\n", timestamp / 1000, data->philo->id, action);
+	printf("%llu %llu %s\n", timestamp / 1000, data->philo->id, action);
 }
