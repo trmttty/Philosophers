@@ -6,7 +6,7 @@
 /*   By: ttarumot <ttarumot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/19 14:13:25 by ttarumot          #+#    #+#             */
-/*   Updated: 2021/02/26 16:03:11 by ttarumot         ###   ########.fr       */
+/*   Updated: 2021/02/27 11:51:35 by ttarumot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,15 @@ void		philo_eat(t_data *data)
 	sem_post(data->state->sem_display);
 	usleep(data->state->time_eat * 1000);
 	sem_post(data->state->sem_forks);
+	data->philo->meal_count++;
+	if (data->philo->meal_count == data->state->num_must_eat)
+		data->state->num_finish_meal++;
+	if (data->state->num_finish_meal >= data->state->num_philo)
+	{
+		sem_wait(data->state->sem_display);
+		display_finish_all_meals(data->state);
+		sem_post(data->state->sem_stop);
+	}
 }
 
 void		philo_sleep(t_data *data)

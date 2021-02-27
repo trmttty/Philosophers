@@ -6,7 +6,7 @@
 /*   By: ttarumot <ttarumot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/19 13:31:24 by ttarumot          #+#    #+#             */
-/*   Updated: 2021/02/27 09:45:43 by ttarumot         ###   ########.fr       */
+/*   Updated: 2021/02/27 11:29:02 by ttarumot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ static void	*check_alive(void *data)
 			state->philo_dead = TRUE;
 			sem_wait(state->sem_display);
 			print_timestamp(data, current_time, ACTION_DEAD);
+			sem_post(state->sem_stop);
 			break ;
 		}
 		else

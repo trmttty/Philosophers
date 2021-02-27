@@ -6,7 +6,7 @@
 /*   By: ttarumot <ttarumot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/19 11:30:51 by ttarumot          #+#    #+#             */
-/*   Updated: 2021/02/25 22:29:28 by ttarumot         ###   ########.fr       */
+/*   Updated: 2021/02/27 11:56:15 by ttarumot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ int				check_args(int argc, char **argv)
 	while (*argv)
 	{
 		if (!is_uint(*argv))
+			return (1);
+		if (ft_atou64(*argv) == 0)
 			return (1);
 		argv++;
 	}

@@ -6,7 +6,7 @@
 /*   By: ttarumot <ttarumot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/19 11:22:07 by ttarumot          #+#    #+#             */
-/*   Updated: 2021/02/27 09:43:24 by ttarumot         ###   ########.fr       */
+/*   Updated: 2021/02/27 11:27:21 by ttarumot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,10 @@ int			init_state(int argc, char **argv, t_state *state)
 		return (error_status(SEMOPEN));
 	sem_unlink("display");
 	state->sem_display = sem_open("display", O_CREAT, 700, 1);
+	if (state->sem_display == SEM_FAILED)
+		return (error_status(SEMOPEN));
+	sem_unlink("stop");
+	state->sem_stop = sem_open("stop", O_CREAT, 700, 0);
 	if (state->sem_display == SEM_FAILED)
 		return (error_status(SEMOPEN));
 	return (0);

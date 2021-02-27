@@ -6,7 +6,7 @@
 /*   By: ttarumot <ttarumot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/21 23:51:39 by ttarumot          #+#    #+#             */
-/*   Updated: 2021/02/26 21:56:23 by ttarumot         ###   ########.fr       */
+/*   Updated: 2021/02/27 11:26:53 by ttarumot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,6 @@ void	*error_exit(t_state *state, char *message)
 	sem_wait(state->sem_display);
 	if (message)
 		ft_putendl_fd(message, 2);
+	sem_post(state->sem_stop);
 	return ((void*)1);
 }
