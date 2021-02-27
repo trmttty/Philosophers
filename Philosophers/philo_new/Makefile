@@ -1,7 +1,7 @@
 CC			= gcc
 FLAGS		= -Wall -Wextra -Werror
 LIBS		= -lpthread
-NAME 		= philo_two
+NAME 		= philo_three
 OBJ_DIR 	= ./objs/
 
 SRC_RT = main.c \
