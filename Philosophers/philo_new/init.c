@@ -6,7 +6,7 @@
 /*   By: ttarumot <ttarumot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/19 11:22:07 by ttarumot          #+#    #+#             */
-/*   Updated: 2021/02/25 23:28:50 by ttarumot         ###   ########.fr       */
+/*   Updated: 2021/02/27 14:11:28 by ttarumot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void		init_state(int argc, char **argv, t_state *state)
 	if (state->sem_display == SEM_FAILED)
 		exit_status(SEMOPEN);
 	sem_unlink("finish_meals");
-	state->sem_finish_meals = sem_open("finish_meals", O_CREAT, 700, 1);
+	state->sem_finish_meals = sem_open("finish_meals", O_CREAT, 700, 0);
 	if (state->sem_finish_meals == SEM_FAILED)
 		exit_status(SEMOPEN);
 }
