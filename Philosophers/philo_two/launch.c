@@ -6,7 +6,7 @@
 /*   By: ttarumot <ttarumot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/19 13:31:24 by ttarumot          #+#    #+#             */
-/*   Updated: 2021/02/26 16:11:07 by ttarumot         ###   ########.fr       */
+/*   Updated: 2021/02/27 09:45:43 by ttarumot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static void	*check_alive(void *data)
 {
 	t_state			*state;
 	t_philo			*philo;
-	unsigned int	current_time;
+	uint64_t		current_time;
 
 	philo = ((t_data*)data)->philo;
 	state = ((t_data*)data)->state;
@@ -32,7 +32,8 @@ static void	*check_alive(void *data)
 			break ;
 		}
 		else
-			usleep(state->time_die * 1000 - (current_time - philo->last_meal_start));
+			usleep(state->time_die * 1000
+					- (current_time - philo->last_meal_start));
 	}
 	return (NULL);
 }
@@ -42,7 +43,7 @@ static void	*launch_philosophers(void *data)
 	t_philo			*philo;
 	t_state			*state;
 	pthread_t		thread;
-	unsigned int	i;
+	uint64_t		i;
 
 	philo = ((t_data*)data)->philo;
 	state = ((t_data*)data)->state;
@@ -50,24 +51,24 @@ static void	*launch_philosophers(void *data)
 		return (error_exit(state, PCREATE));
 	if (pthread_detach(thread))
 		return (error_exit(state, PDETACH));
-	i = 0;
-	while (!state->philo_dead && (!state->num_must_eat || i < state->num_must_eat))
+	i = 1;
+	while (!state->philo_dead)
 	{
 		philo_take_forks(data);
 		philo_eat(data);
+		if (state->num_must_eat && i == state->num_must_eat)
+			state->num_finish_meal++;
 		philo_sleep(data);
 		philo_think(data);
 		i++;
 	}
-	if (state->num_must_eat && i == state->num_must_eat)
-		state->num_finish_meal++;
 	return (NULL);
 }
 
 int			launch(t_philo *philo, t_state *state, t_data *data)
 {
 	pthread_t		thread;
-	unsigned int	i;
+	uint64_t		i;
 
 	set_start_time(state);
 	i = 0;

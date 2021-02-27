@@ -2,8 +2,6 @@ CC			= gcc
 FLAGS		= -Wall -Wextra -Werror
 LIBS		= -lpthread
 NAME 		= philo_two
-DIR_LIB		= libft
-LIBFT		= $(DIR_LIB)/libft.a
 OBJ_DIR 	= ./objs/
 
 SRC_RT = main.c \
@@ -14,6 +12,7 @@ SRC_RT = main.c \
 			monitor.c \
 			time.c \
 			error.c \
+			clear.c \
 			utils_1.c \
 			utils_2.c
 
@@ -22,8 +21,8 @@ OBJ = $(OBJ_RT)
 
 all : $(NAME)
 
-$(NAME) : $(LIBFT) $(OBJ_DIR) $(OBJ_RT)
-	$(CC) $(FLAGS) -L libft -lft $(LIBS) $(OBJ) -o $@
+$(NAME) : $(OBJ_DIR) $(OBJ_RT)
+	$(CC) $(FLAGS) $(LIBS) $(OBJ) -o $@
 
 $(OBJ_DIR) :
 	mkdir -p $(OBJ_DIR)
@@ -31,15 +30,10 @@ $(OBJ_DIR) :
 $(OBJ_DIR)%.o : $(SRC_RT_DIR)%.c
 	$(CC) $(FLAGS) -o $@ -c $<
 
-$(LIBFT):
-	make bonus -C $(DIR_LIB)
-
 clean :
-	make clean -C $(DIR_LIB)
 	rm -rf $(OBJ_DIR)
 
 fclean : clean
-	make fclean -C $(DIR_LIB)
 	rm -f $(NAME)
 
 re : fclean all

@@ -6,7 +6,7 @@
 /*   By: ttarumot <ttarumot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/11 11:59:22 by Jeanxavier        #+#    #+#             */
-/*   Updated: 2021/02/24 10:36:59 by ttarumot         ###   ########.fr       */
+/*   Updated: 2021/02/26 21:29:33 by ttarumot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,6 @@ int			main(int argc, char **argv)
 		return (1);
 	if (monitor(state))
 		return (1);
-	free(philo);
-	free(state);
-	free(data);
+	clear_all(philo, state, data);
 	return (0);
 }

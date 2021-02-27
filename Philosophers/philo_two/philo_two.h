@@ -6,7 +6,7 @@
 /*   By: ttarumot <ttarumot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/11 12:08:00 by Jeanxavier        #+#    #+#             */
-/*   Updated: 2021/02/26 16:17:59 by ttarumot         ###   ########.fr       */
+/*   Updated: 2021/02/27 09:48:09 by ttarumot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,9 @@
 
 typedef struct		s_philo
 {
-	pid_t			pid;
 	int				id;
 	int				dead;
 	uint64_t		last_meal_start;
-	uint64_t		timestamp;
-	char			*action;
 }					t_philo;
 
 typedef struct		s_state
@@ -67,7 +64,6 @@ typedef struct		s_state
 	int				thread_error;
 	sem_t			*sem_forks;
 	sem_t			*sem_display;
-	sem_t			*sem_finish_meals;
 }					t_state;
 
 typedef	struct		s_data

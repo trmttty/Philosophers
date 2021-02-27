@@ -6,7 +6,7 @@
 /*   By: ttarumot <ttarumot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/19 11:22:07 by ttarumot          #+#    #+#             */
-/*   Updated: 2021/02/26 16:08:56 by ttarumot         ###   ########.fr       */
+/*   Updated: 2021/02/27 09:43:24 by ttarumot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int			init_state(int argc, char **argv, t_state *state)
 
 int			init_philosopher(t_philo *philo, t_state *state)
 {
-	unsigned int	i;
+	uint64_t	i;
 
 	i = 0;
 	while (i < state->num_philo)
