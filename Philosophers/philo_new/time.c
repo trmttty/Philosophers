@@ -6,11 +6,11 @@
 /*   By: ttarumot <ttarumot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/19 11:41:46 by ttarumot          #+#    #+#             */
-/*   Updated: 2021/02/25 17:59:57 by ttarumot         ###   ########.fr       */
+/*   Updated: 2021/02/27 15:10:04 by ttarumot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo_two.h"
+#include "philo_three.h"
 
 void			set_start_time(t_state *state)
 {

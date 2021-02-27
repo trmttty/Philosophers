@@ -6,11 +6,11 @@
 /*   By: ttarumot <ttarumot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/21 23:51:39 by ttarumot          #+#    #+#             */
-/*   Updated: 2021/02/25 09:15:55 by ttarumot         ###   ########.fr       */
+/*   Updated: 2021/02/27 15:09:12 by ttarumot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo_two.h"
+#include "philo_three.h"
 
 int		error_status(char *message)
 {

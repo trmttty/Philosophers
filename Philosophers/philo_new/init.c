@@ -6,11 +6,11 @@
 /*   By: ttarumot <ttarumot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/19 11:22:07 by ttarumot          #+#    #+#             */
-/*   Updated: 2021/02/27 14:11:28 by ttarumot         ###   ########.fr       */
+/*   Updated: 2021/02/27 15:09:18 by ttarumot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo_two.h"
+#include "philo_three.h"
 
 void		init_state(int argc, char **argv, t_state *state)
 {

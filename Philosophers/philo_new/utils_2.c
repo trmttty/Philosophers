@@ -6,11 +6,11 @@
 /*   By: ttarumot <ttarumot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/19 11:30:51 by ttarumot          #+#    #+#             */
-/*   Updated: 2021/02/25 22:31:56 by ttarumot         ###   ########.fr       */
+/*   Updated: 2021/02/27 15:10:16 by ttarumot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo_two.h"
+#include "philo_three.h"
 
 void			*ft_calloc(size_t count, size_t size)
 {
