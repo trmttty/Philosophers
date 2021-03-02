@@ -6,7 +6,7 @@
 /*   By: ttarumot <ttarumot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/11 11:59:22 by Jeanxavier        #+#    #+#             */
-/*   Updated: 2021/02/19 15:42:46 by ttarumot         ###   ########.fr       */
+/*   Updated: 2021/03/02 10:10:34 by ttarumot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,25 @@
 
 int			main(int argc, char **argv)
 {
-	t_data		*data;
 	t_philo		*philo;
-	t_stock		*stock;
+	t_state		*state;
+	t_data		*data;
 
 	if (check_args(argc, argv))
+		return (error_status(INVAL));
+	if (!(state = ft_calloc(1, sizeof(t_state))))
+		return (error_status(NOMEM));
+	if (init_state(argc, argv, state))
 		return (1);
-	if (!(data = ft_calloc(1, sizeof(t_data))))
+	if (!(philo = ft_calloc(state->num_philo, sizeof(t_philo))))
+		return (error_status(NOMEM));
+	if (init_philosopher(philo, state))
 		return (1);
-	init_data(argc, argv, data);
-	if (!(philo = ft_calloc(data->n_philo, sizeof(t_philo))))
+	if (!(data = ft_calloc(state->num_philo, sizeof(t_data))))
+		return (error_status(NOMEM));
+	if (launch(philo, state, data))
 		return (1);
-	if (init_philosopher(philo, data->n_philo))
-		return (1);
-	if (!(stock = ft_calloc(data->n_philo + 1, sizeof(t_stock))))
-		return (0);
-	launch(stock, data, philo);
-	monitor(data, philo);
-	free_philosophers(data, philo);
-	free(stock);
+	monitor(state);
+	clear_all(philo, state, data);
 	return (0);
 }

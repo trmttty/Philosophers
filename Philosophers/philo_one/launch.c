@@ -6,76 +6,74 @@
 /*   By: ttarumot <ttarumot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/19 13:31:24 by ttarumot          #+#    #+#             */
-/*   Updated: 2021/02/19 14:06:49 by ttarumot         ###   ########.fr       */
+/*   Updated: 2021/03/02 10:13:35 by ttarumot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_one.h"
 
-void		*reaper(void *stock)
+static void	*check_alive(void *data)
 {
-	t_stock			*s;
-	t_data			*data;
+	t_state			*state;
 	t_philo			*philo;
-	unsigned int	current_time;
+	uint64_t		current_time;
 
-	s = stock;
-	data = s->data;
-	philo = s->philo;
-	usleep(data->t_die * ONE_MILLISEC);
-	current_time = get_time(data->t_start_usec, data->t_start_sec);
-	if (philo->life && current_time - philo->last_meal >= data->t_die)
+	philo = ((t_data*)data)->philo;
+	state = ((t_data*)data)->state;
+	while (1)
 	{
-		pthread_mutex_lock(philo->m_display);
-		data->one_die = TRUE;
-		display_manager(s, philo, EVENT_DEAD);
+		current_time = get_duration_time(state);
+		if (current_time - philo->last_meal_start >= state->time_die * 1000)
+		{
+			state->philo_dead = TRUE;
+			pthread_mutex_lock(state->m_display);
+			print_timestamp(data, current_time, ACTION_DEAD);
+			break ;
+		}
+		else
+			usleep(state->time_die * 1000
+					- (current_time - philo->last_meal_start));
 	}
 	return (NULL);
 }
 
-void		*life_philosophers(void *stock)
+static void	*launch_philosophers(void *data)
 {
-	unsigned int	i;
-	t_stock			*s;
-	t_data			*data;
 	t_philo			*philo;
-	pthread_t		death;
+	t_state			*state;
+	pthread_t		thread;
 
-	i = 0;
-	s = stock;
-	data = s->data;
-	philo = s->philo;
-	philo->life = TRUE;
-	while (!data->one_die && (!data->meals || i < data->nb_meals))
+	philo = ((t_data*)data)->philo;
+	state = ((t_data*)data)->state;
+	if (pthread_create(&thread, NULL, &check_alive, data))
+		return (error_exit(state, PCREATE));
+	if (pthread_detach(thread))
+		return (error_exit(state, PDETACH));
+	while (!state->philo_dead)
 	{
-		pthread_detach(death);
-		pthread_create(&death, NULL, &reaper, s);
-		philo_take_fork(s, philo);
-		philo_eat(s, philo);
-		philo_sleep(s, philo);
-		philo_think(s, philo);
-		i++;
+		philo_take_forks(data);
+		philo_eat(data);
+		philo_sleep(data);
+		philo_think(data);
 	}
-	philo->life = FALSE;
-	pthread_detach(death);
-	if (data->meals && i == data->nb_meals)
-		data->meals_finish++;
 	return (NULL);
 }
 
-int			launch(t_stock *stock, t_data *data, t_philo *philo)
+int			launch(t_philo *philo, t_state *state, t_data *data)
 {
-	unsigned int	i;
+	pthread_t		thread;
+	uint64_t		i;
 
-	get_time_start(data);
+	set_start_time(state);
 	i = 0;
-	while (i < data->n_philo)
+	while (i < state->num_philo)
 	{
-		stock[i].philo = &philo[i];
-		stock[i].data = data;
-		if (pthread_create(&philo[i].thread, NULL, &life_philosophers, &stock[i]))
-			return (1);
-		usleep(10);
+		data[i].philo = &philo[i];
+		data[i].state = state;
+		if (pthread_create(&thread, NULL, &launch_philosophers, &data[i]))
+			return (error_status(PCREATE));
+		if (pthread_detach(thread))
+			return (error_status(PDETACH));
 		i++;
 	}
 	return (0);

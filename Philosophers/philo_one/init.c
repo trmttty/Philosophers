@@ -6,75 +6,43 @@
 /*   By: ttarumot <ttarumot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/19 11:22:07 by ttarumot          #+#    #+#             */
-/*   Updated: 2021/02/19 11:25:24 by ttarumot         ###   ########.fr       */
+/*   Updated: 2021/03/02 09:42:30 by ttarumot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_one.h"
 
-void		init_data(int argc, char **argv, t_data *data)
+int			init_state(int argc, char **argv, t_state *state)
 {
-	data->n_philo = ft_atoi(argv[1]);
-	data->t_die = ft_atoi(argv[2]);
-	data->t_eat = ft_atoi(argv[3]);
-	data->t_sleep = ft_atoi(argv[4]);
+	uint64_t	i;
+
+	state->num_philo = ft_atou64(argv[1]);
+	state->time_die = ft_atou64(argv[2]);
+	state->time_eat = ft_atou64(argv[3]);
+	state->time_sleep = ft_atou64(argv[4]);
 	if (argc == 6)
-	{
-		data->meals = 1;
-		data->nb_meals = ft_atoi(argv[5]);
-    }
-}
-
-int			init_fork(t_philo *philo, unsigned int n_philo)
-{
-	unsigned int i;
-
+		state->num_must_eat = ft_atou64(argv[5]);
+	if ((state->m_display = ft_calloc(1, sizeof(pthread_mutex_t))) == NULL)
+		return (error_status(NOMEM));
+	pthread_mutex_init(state->m_display, NULL);
+	if ((state->m_forks = ft_calloc(state->num_philo, sizeof(pthread_mutex_t))) == NULL)
+		return (error_status(NOMEM));
 	i = 0;
-	while (i < n_philo)
-	{
-		if (!(philo[i].m_fork1 = malloc(sizeof(pthread_mutex_t))))
-			return (1);
-		pthread_mutex_init(philo[i].m_fork1, NULL);
-		i++;
-	}
-	i = 0;
-	while (i < n_philo)
-	{
-		philo[i].m_fork2 = philo[(i + 1) % n_philo].m_fork1;
-		i++;
-	}
+	while (i++ < state->num_philo)
+		pthread_mutex_init(&state->m_forks[i], NULL);
 	return (0);
 }
 
-int			init_display(t_philo *philo, unsigned int n_philo)
+int			init_philosopher(t_philo *philo, t_state *state)
 {
-	unsigned int	i;
-	pthread_mutex_t	*display;
+	uint64_t	i;
 
-	if (!(display = malloc(sizeof(pthread_mutex_t))))
-		return (1);
-	pthread_mutex_init(display, NULL);
 	i = 0;
-	while (i < n_philo)
-	{
-		philo[i].m_display = display;
-		i++;
-	}
-	return (0);
-}
-
-int			init_philosopher(t_philo *philo, unsigned int n_philo)
-{
-	unsigned int i;
-
-	if (init_fork(philo, n_philo))
-		return (1);
-	if (init_display(philo, n_philo))
-		return (1);
-	i = 0;
-	while (i < n_philo)
+	while (i < state->num_philo)
 	{
 		philo[i].id = i + 1;
+		philo[i].m_rfork = &state->m_forks[i];
+		philo[i].m_lfork = &state->m_forks[(i + 1) % state->num_philo];
 		i++;
 	}
 	return (0);

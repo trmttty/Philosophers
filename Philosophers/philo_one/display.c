@@ -6,24 +6,22 @@
 /*   By: ttarumot <ttarumot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/19 14:05:34 by ttarumot          #+#    #+#             */
-/*   Updated: 2021/02/19 15:50:50 by ttarumot         ###   ########.fr       */
+/*   Updated: 2021/02/28 09:30:42 by ttarumot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_one.h"
 
-void		display_all_meals_ate(t_data *data)
+void		display_finish_all_meals(t_state *state)
 {
-	unsigned int	current_time;
+	uint64_t	current_time;
 
-	current_time = get_time(data->t_start_usec, data->t_start_sec);
-	printf("%10u all the meals ate\n", current_time);
+	current_time = get_duration_time(state);
+	printf("%llu All the philosophers have finished their %llu meals\n",
+			current_time / 1000, state->num_must_eat);
 }
 
-void		display_manager(t_stock *s, t_philo *philo, char *event)
+void		print_timestamp(t_data *data, uint64_t timestamp, char *action)
 {
-	unsigned int	current_time;
-
-	current_time = get_time(s->data->t_start_usec, s->data->t_start_sec);
-	printf("%10u %u %s\n", current_time, philo->id, event);
+	printf("%llu %llu %s\n", timestamp / 1000, data->philo->id, action);
 }
